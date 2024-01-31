@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34408.163
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopazioRevitPlugin2022", "TopazioRevitPlugin2022\TopazioRevitPlugin2022.csproj", "{64911CB4-12AB-413F-89CD-7F6B8A20C503}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "TopazioRevitPluginShared", "TopazioRevitPluginShared\TopazioRevitPluginShared.shproj", "{5C34D65D-FC54-44D6-B6E4-B2C2A04A23BA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Icons", "Icons", "{81F99D9F-4021-4701-A1D0-9E28A5208471}"
+	ProjectSection(SolutionItems) = preProject
+		Icons\MatchOverrideGraphics.png = Icons\MatchOverrideGraphics.png
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{64911CB4-12AB-413F-89CD-7F6B8A20C503}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64911CB4-12AB-413F-89CD-7F6B8A20C503}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64911CB4-12AB-413F-89CD-7F6B8A20C503}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64911CB4-12AB-413F-89CD-7F6B8A20C503}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A5F9722F-0A00-466B-A555-32543418CC43}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		TopazioRevitPluginShared\TopazioRevitPluginShared.projitems*{5c34d65d-fc54-44d6-b6e4-b2c2a04a23ba}*SharedItemsImports = 13
+		TopazioRevitPluginShared\TopazioRevitPluginShared.projitems*{64911cb4-12ab-413f-89cd-7f6b8a20c503}*SharedItemsImports = 4
+	EndGlobalSection
+EndGlobal
