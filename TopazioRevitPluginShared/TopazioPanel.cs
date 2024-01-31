@@ -50,6 +50,7 @@ namespace TopazioRevitPluginShared
                 BitmapImage largeImage = new BitmapImage(uriImage);
                 // Apply image to button 
                 button.LargeImage = largeImage;
+
             }
 
             return Result.Succeeded;
