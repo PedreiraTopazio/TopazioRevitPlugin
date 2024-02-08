@@ -22,16 +22,16 @@ namespace TopazioRevitPluginShared
 
         public Result OnStartup(UIControlledApplication application)
         {
-            string topazioTab = "Topazio";
-            List<string> topazioPanels = new List<string>();
-            topazioPanels.Add("Visualização");
-            
             //Creating Tab
+            string topazioTab = "Topazio";
             application.CreateRibbonTab(topazioTab);
-            
+
 
             //Creating Panels
-            foreach(string panel in topazioPanels)
+            List<string> topazioPanels = new List<string>();
+            topazioPanels.Add("Visualização");
+
+            foreach (string panel in topazioPanels)
             {
                 application.CreateRibbonPanel(topazioTab, panel);
             }
