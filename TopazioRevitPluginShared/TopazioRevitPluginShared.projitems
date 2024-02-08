@@ -9,6 +9,7 @@
     <Import_RootNamespace>TopazioRevitPluginShared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)AutoDimension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MatchOverrides.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TopazioPanel.cs" />
   </ItemGroup>

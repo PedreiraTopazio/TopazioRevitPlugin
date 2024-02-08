@@ -56,7 +56,7 @@ namespace TopazioRevitPluginShared
             }
             
             RibbonPanel panel_Documentacao = RibbonPanel(application, "Topazio", "Documentação");
-            if(panel_Documentacao.AddItem(new PushButtonData("Topazio Dimensions", "Topazio Dimensions", thisAssemblyPath, "TopazioRevitPluginShared.MatchOverrides")) is PushButton SemiAutomaticDimensionsButton)
+            if(panel_Documentacao.AddItem(new PushButtonData("Topazio Dimensions", "Topazio Dimensions", thisAssemblyPath, "TopazioRevitPluginShared.AutoDimension")) is PushButton SemiAutomaticDimensionsButton)
             {
                 SemiAutomaticDimensionsButton.ToolTip = "Esse comando cria novas cotas expecificando dois pontos de referencia";
                 // Reflection of path to image 
