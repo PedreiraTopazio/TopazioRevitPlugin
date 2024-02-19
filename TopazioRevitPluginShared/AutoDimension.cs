@@ -64,6 +64,7 @@ namespace TopazioRevitPluginShared
                     }
                 }
 
+                //PRECISO SUBSTITUIR AS LINHAS DE CÓDIGO ABAIXO PARA CONSEGUIR SELECIONAR AS VIGAS AUTOMATICAMENTE
                 //Pick beams
                 BeamFilter filter = new BeamFilter();
                 //Define a reference Object to accept the pick result
@@ -80,7 +81,6 @@ namespace TopazioRevitPluginShared
                     FamilyInstance elem = doc.GetElement(elemReference) as FamilyInstance;
                     referenceArray.Append(elem.GetReferenceByName("Front"));
                     referenceArray.Append(elem.GetReferenceByName("Back"));
-
                 }
                 int size = referenceArray.Size;
                 
