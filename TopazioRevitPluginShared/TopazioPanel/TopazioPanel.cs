@@ -40,9 +40,8 @@ namespace TopazioRevitPluginShared
             //Creating buttons
             string thisAssemblyPath = Assembly.GetExecutingAssembly().Location;
 
-
-            RibbonPanel panel_Visualizacao = RibbonPanel(application, "Topazio", "Visualização");
-            if (panel_Visualizacao.AddItem(new PushButtonData("Match Overrides", "Match Overrides", thisAssemblyPath, "TopazioRevitPluginShared.MatchOverrides")) is PushButton MatchOverridesButton)
+            RibbonPanel panel_Sobre = RibbonPanel(application, "Topazio", "Sobre");
+            if (panel_Sobre.AddItem(new PushButtonData("Match Overrides", "Match Overrides", thisAssemblyPath, "TopazioRevitPluginShared.MatchOverrides")) is PushButton MatchOverridesButton)
             {
                 MatchOverridesButton.ToolTip = "Esse comando iguala as sobreposições de elementos na vista";
                 // Reflection of path to image 
@@ -54,6 +53,21 @@ namespace TopazioRevitPluginShared
                 MatchOverridesButton.LargeImage = largeImage;
 
             }
+
+            RibbonPanel panel_Visualizacao = RibbonPanel(application, "Topazio", "Visualização");
+            PulldownButton aboutButton = new PulldownButton();
+            //if (panel_Visualizacao.AddItem(new PulldownButton("Match Overrides", "Match Overrides", thisAssemblyPath, "TopazioRevitPluginShared.MatchOverrides")) is PushButton MatchOverridesButton)
+            //{
+            //    MatchOverridesButton.ToolTip = "Esse comando iguala as sobreposições de elementos na vista";
+            //    // Reflection of path to image 
+            //    var globePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "MatchOverrideGraphics.png"); //Mudar path depois para poder pegar outras imagens
+            //    Uri uriImage = new Uri(globePath);
+            //    // Apply image to bitmap
+            //    BitmapImage largeImage = new BitmapImage(uriImage);
+            //    // Apply image to button 
+            //    MatchOverridesButton.LargeImage = largeImage;
+
+            //}
             
             RibbonPanel panel_Documentacao = RibbonPanel(application, "Topazio", "Documentação");
             if(panel_Documentacao.AddItem(new PushButtonData("Auto Dimensions", "Auto Dimensions", thisAssemblyPath, "TopazioRevitPluginShared.AutoDimension")) is PushButton SemiAutomaticDimensionsButton)

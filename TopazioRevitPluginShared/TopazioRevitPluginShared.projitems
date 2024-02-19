@@ -9,9 +9,14 @@
     <Import_RootNamespace>TopazioRevitPluginShared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)AutoDimension.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)MatchOverrides.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)TopazioPanel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TopazioPanel\Documentação\AutoDimension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TopazioPanel\Visualização\MatchOverrides.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TopazioPanel\TopazioPanel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)TopazioPanel\Documentação\" />
+    <Folder Include="$(MSBuildThisFileDirectory)TopazioPanel\Sobre\" />
+    <Folder Include="$(MSBuildThisFileDirectory)TopazioPanel\Visualização\" />
   </ItemGroup>
 </Project>
