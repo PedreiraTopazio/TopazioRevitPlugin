@@ -12,5 +12,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)AutoDimension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MatchOverrides.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TopazioPanel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils.cs" />
   </ItemGroup>
 </Project>

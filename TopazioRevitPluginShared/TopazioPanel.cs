@@ -58,7 +58,7 @@ namespace TopazioRevitPluginShared
             RibbonPanel panel_Documentacao = RibbonPanel(application, "Topazio", "Documentação");
             if(panel_Documentacao.AddItem(new PushButtonData("Auto Dimensions", "Auto Dimensions", thisAssemblyPath, "TopazioRevitPluginShared.AutoDimension")) is PushButton SemiAutomaticDimensionsButton)
             {
-                SemiAutomaticDimensionsButton.ToolTip = "Esse comando cria novas cotas expecificando dois pontos de referencia e as vigas a serem cotadas";
+                SemiAutomaticDimensionsButton.ToolTip = "Esse comando cria novas cotas expecificando dois pontos de referencia e as vigas a serem cotadas.";
                 // Reflection of path to image 
                 var globePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "AutoDimension.png"); //Mudar path depois para poder pegar outras imagens
                 Uri uriImage = new Uri(globePath);

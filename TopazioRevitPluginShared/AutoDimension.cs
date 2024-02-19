@@ -4,6 +4,8 @@ using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using TopazioRevitPlugin2022;
 
@@ -75,18 +77,39 @@ namespace TopazioRevitPluginShared
 
                 //get reference
                 ReferenceArray referenceArray = new ReferenceArray();
-                Line newLine2 = Line.CreateBound(firstPoint, secondPoint);
+                Line Line = Line.CreateBound(firstPoint, secondPoint);
+
+                var vigasNaoPerpendiculares = new List<string>();
                 foreach (Reference elemReference in pickedrefs)
                 {
                     FamilyInstance elem = doc.GetElement(elemReference) as FamilyInstance;
-                    referenceArray.Append(elem.GetReferenceByName("Front"));
-                    referenceArray.Append(elem.GetReferenceByName("Back"));
+                    var directionLocationCurve = elem.Location as LocationCurve;
+                    Curve directionCurve = directionLocationCurve.Curve;
+                    Line directionLine = directionCurve as Line;
+                    if (Utils.AreLinesPerpendicular(directionLine, Line))
+                    {
+                        referenceArray.Append(elem.GetReferenceByName("Front"));
+                        referenceArray.Append(elem.GetReferenceByName("Back"));
+                    }
+                    else 
+                    {
+                        vigasNaoPerpendiculares.Add(elem.Id.ToString());
+                    };
+                    
                 }
-                int size = referenceArray.Size;
-                
+                if (vigasNaoPerpendiculares.Count > 0)
+                {
+                    string errorMessage = "As vigas: ";
+                    foreach (var viga in vigasNaoPerpendiculares)
+                    {
+                        errorMessage = errorMessage + viga + " ";
+                    }
+                    errorMessage = errorMessage + "não estão perpendiculares, e não foram cotadas.";
+                    TaskDialog.Show("Topazio Erro", errorMessage);
+                }
                 Transaction trans = new Transaction(doc);
                 trans.Start("Automatic Dimension");
-                Dimension newDimension = doc.Create.NewDimension(doc.ActiveView, newLine2, referenceArray);
+                Dimension newDimension = doc.Create.NewDimension(doc.ActiveView, Line, referenceArray);
                 trans.Commit();
 
 
