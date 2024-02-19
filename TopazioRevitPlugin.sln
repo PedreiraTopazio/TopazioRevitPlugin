@@ -9,6 +9,7 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "TopazioRevitPluginShared", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Icons", "Icons", "{81F99D9F-4021-4701-A1D0-9E28A5208471}"
 	ProjectSection(SolutionItems) = preProject
+		Icons\AutoDimension.png = Icons\AutoDimension.png
 		Icons\MatchOverrideGraphics.png = Icons\MatchOverrideGraphics.png
 	EndProjectSection
 EndProject

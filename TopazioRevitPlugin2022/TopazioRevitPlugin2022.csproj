@@ -34,11 +34,11 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="RevitAPI">
-      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2022\RevitAPI.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\Revit 2022\RevitAPI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="RevitAPIUI">
-      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2022\RevitAPIUI.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\Revit 2022\RevitAPIUI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -75,7 +75,7 @@
       <SourcePdbs Include="$(TargetDir)*.pdb" />
       <SourcePdbs Include="$(TargetDir)*.pdb" />
       <SourceXmls Include="$(TargetDir)*.xml" />
-      <SourcePngs Include="$(TargetDir)*.png" />
+      <SourcePngs Include="..\Icons\*.png" />
     </ItemGroup>
     <RemoveDir Directories="C:\Topazio\RevitPlugin\2022" />
     <Copy SourceFiles="@(SourceDlls)" DestinationFolder="C:\Topazio\RevitPlugin\2022" />

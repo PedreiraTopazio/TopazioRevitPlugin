@@ -30,6 +30,7 @@ namespace TopazioRevitPluginShared
             //Creating Panels
             List<string> topazioPanels = new List<string>();
             topazioPanels.Add("Visualização");
+            topazioPanels.Add("Documentação");
 
             foreach (string panel in topazioPanels)
             {
@@ -39,17 +40,32 @@ namespace TopazioRevitPluginShared
             //Creating buttons
             string thisAssemblyPath = Assembly.GetExecutingAssembly().Location;
 
+
             RibbonPanel panel_Visualizacao = RibbonPanel(application, "Topazio", "Visualização");
-            if(panel_Visualizacao.AddItem(new PushButtonData("Match Overrides", "Match Overrides", thisAssemblyPath, "TopazioRevitPluginShared.MatchOverrides")) is PushButton button)
+            if (panel_Visualizacao.AddItem(new PushButtonData("Match Overrides", "Match Overrides", thisAssemblyPath, "TopazioRevitPluginShared.MatchOverrides")) is PushButton MatchOverridesButton)
             {
-                button.ToolTip = "Esse comando iguala as sobreposições de elementos na vista";
+                MatchOverridesButton.ToolTip = "Esse comando iguala as sobreposições de elementos na vista";
                 // Reflection of path to image 
                 var globePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "MatchOverrideGraphics.png"); //Mudar path depois para poder pegar outras imagens
                 Uri uriImage = new Uri(globePath);
                 // Apply image to bitmap
                 BitmapImage largeImage = new BitmapImage(uriImage);
                 // Apply image to button 
-                button.LargeImage = largeImage;
+                MatchOverridesButton.LargeImage = largeImage;
+
+            }
+            
+            RibbonPanel panel_Documentacao = RibbonPanel(application, "Topazio", "Documentação");
+            if(panel_Documentacao.AddItem(new PushButtonData("Auto Dimensions", "Auto Dimensions", thisAssemblyPath, "TopazioRevitPluginShared.AutoDimension")) is PushButton SemiAutomaticDimensionsButton)
+            {
+                SemiAutomaticDimensionsButton.ToolTip = "Esse comando cria novas cotas expecificando dois pontos de referencia e as vigas a serem cotadas.";
+                // Reflection of path to image 
+                var globePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "AutoDimension.png"); //Mudar path depois para poder pegar outras imagens
+                Uri uriImage = new Uri(globePath);
+                // Apply image to bitmap
+                BitmapImage largeImage = new BitmapImage(uriImage);
+                // Apply image to button 
+                SemiAutomaticDimensionsButton.LargeImage = largeImage;
 
             }
 
