@@ -2,7 +2,7 @@
 using Autodesk.Revit.UI.Selection;
 using System.Collections.Generic;
 
-namespace TopazioRevitPlugin2022
+namespace TopazioRevitPluginShared
 {
     public class AllFilter : ISelectionFilter
     {
