@@ -9,6 +9,7 @@ using Autodesk.Revit.UI;
 using System.Windows.Media.Imaging;
 using System.IO;
 using System.Windows.Controls;
+using TopazioRevitPluginShared;
 
 namespace TopazioRevitPluginShared
 {
@@ -29,6 +30,7 @@ namespace TopazioRevitPluginShared
 
             //Creating Panels
             List<string> topazioPanels = new List<string>();
+            topazioPanels.Add("Sobre");
             topazioPanels.Add("Visualização");
             topazioPanels.Add("Documentação");
 
@@ -41,7 +43,57 @@ namespace TopazioRevitPluginShared
             string thisAssemblyPath = Assembly.GetExecutingAssembly().Location;
 
             RibbonPanel panel_Sobre = RibbonPanel(application, "Topazio", "Sobre");
-            if (panel_Sobre.AddItem(new PushButtonData("Match Overrides", "Match Overrides", thisAssemblyPath, "TopazioRevitPluginShared.MatchOverrides")) is PushButton MatchOverridesButton)
+            PulldownButton aboutButton = (PulldownButton)panel_Sobre.AddItem(new PulldownButtonData("Sobre", "Sobre"));
+            if (aboutButton is PulldownButton)
+            {
+                aboutButton.ToolTip = "Informações sobre a Pedreira Topazio.";
+                // Reflection of path to image 
+                var globePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "MatchOverrideGraphics.png"); //Mudar path depois para poder pegar outras imagens
+                Uri uriImage = new Uri(globePath);
+                // Apply image to bitmap
+                BitmapImage largeImage = new BitmapImage(uriImage);
+                // Apply image to button 
+                aboutButton.LargeImage = largeImage;
+            }
+            if (aboutButton.AddPushButton(new PushButtonData("Site", "Site", thisAssemblyPath, "TopazioRevitPluginShared.SiteLink")) is PushButton SiteButton)
+            {
+                SiteButton.ToolTip = "Abrir Site da Pedreira Topazio.";
+                // Reflection of path to image 
+                var globePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "MatchOverrideGraphics.png"); //Mudar path depois para poder pegar outras imagens
+                Uri uriImage = new Uri(globePath);
+                // Apply image to bitmap
+                BitmapImage largeImage = new BitmapImage(uriImage);
+                // Apply image to button 
+                SiteButton.LargeImage = largeImage;
+
+            }
+            if (aboutButton.AddPushButton(new PushButtonData("LinkedIn", "LinkedIn", thisAssemblyPath, "TopazioRevitPluginShared.LinkedInLink")) is PushButton LinkedInButton)
+            {
+                LinkedInButton.ToolTip = "Abrir LinkedIn da Pedreira Topazio.";
+                // Reflection of path to image 
+                var globePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "MatchOverrideGraphics.png"); //Mudar path depois para poder pegar outras imagens
+                Uri uriImage = new Uri(globePath);
+                // Apply image to bitmap
+                BitmapImage largeImage = new BitmapImage(uriImage);
+                // Apply image to button 
+                LinkedInButton.LargeImage = largeImage;
+
+            }
+            if (aboutButton.AddPushButton(new PushButtonData("Instagram", "Instagram", thisAssemblyPath, "TopazioRevitPluginShared.InstagramLink")) is PushButton InstagramButton)
+            {
+                InstagramButton.ToolTip = "Abrir Intagram da Pedreira Topazio.";
+                // Reflection of path to image 
+                var globePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "MatchOverrideGraphics.png"); //Mudar path depois para poder pegar outras imagens
+                Uri uriImage = new Uri(globePath);
+                // Apply image to bitmap
+                BitmapImage largeImage = new BitmapImage(uriImage);
+                // Apply image to button 
+                InstagramButton.LargeImage = largeImage;
+
+            }
+
+            RibbonPanel panel_Visualizacao = RibbonPanel(application, "Topazio", "Visualização");
+            if (panel_Visualizacao.AddItem(new PushButtonData("Match Overrides", "Match Overrides", thisAssemblyPath, "TopazioRevitPluginShared.MatchOverrides")) is PushButton MatchOverridesButton)
             {
                 MatchOverridesButton.ToolTip = "Esse comando iguala as sobreposições de elementos na vista";
                 // Reflection of path to image 
@@ -54,21 +106,6 @@ namespace TopazioRevitPluginShared
 
             }
 
-            RibbonPanel panel_Visualizacao = RibbonPanel(application, "Topazio", "Visualização");
-            PulldownButton aboutButton = new PulldownButton();
-            //if (panel_Visualizacao.AddItem(new PulldownButton("Match Overrides", "Match Overrides", thisAssemblyPath, "TopazioRevitPluginShared.MatchOverrides")) is PushButton MatchOverridesButton)
-            //{
-            //    MatchOverridesButton.ToolTip = "Esse comando iguala as sobreposições de elementos na vista";
-            //    // Reflection of path to image 
-            //    var globePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "MatchOverrideGraphics.png"); //Mudar path depois para poder pegar outras imagens
-            //    Uri uriImage = new Uri(globePath);
-            //    // Apply image to bitmap
-            //    BitmapImage largeImage = new BitmapImage(uriImage);
-            //    // Apply image to button 
-            //    MatchOverridesButton.LargeImage = largeImage;
-
-            //}
-            
             RibbonPanel panel_Documentacao = RibbonPanel(application, "Topazio", "Documentação");
             if(panel_Documentacao.AddItem(new PushButtonData("Auto Dimensions", "Auto Dimensions", thisAssemblyPath, "TopazioRevitPluginShared.AutoDimension")) is PushButton SemiAutomaticDimensionsButton)
             {
