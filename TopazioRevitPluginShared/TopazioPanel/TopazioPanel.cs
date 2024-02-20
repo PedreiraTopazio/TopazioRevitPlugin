@@ -119,6 +119,18 @@ namespace TopazioRevitPluginShared
                 SemiAutomaticDimensionsButton.LargeImage = largeImage;
 
             }
+            if (panel_Documentacao.AddItem(new PushButtonData("Pilar NMC", "Pilar NMC", thisAssemblyPath, "TopazioRevitPluginShared.StructuralColumnHatches")) is PushButton structuralColumnHatchButton)
+            {
+                structuralColumnHatchButton.ToolTip = "Esse comando cria novas cotas expecificando dois pontos de referencia e as vigas a serem cotadas.";
+                // Reflection of path to image
+                var globePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Icons/AutoDimension.png"); //Mudar path depois para poder pegar outras imagens
+                Uri uriImage = new Uri(globePath);
+                // Apply image to bitmap
+                BitmapImage largeImage = new BitmapImage(uriImage);
+                // Apply image to button
+                structuralColumnHatchButton.LargeImage = largeImage;
+
+            }
 
             return Result.Succeeded;
         }

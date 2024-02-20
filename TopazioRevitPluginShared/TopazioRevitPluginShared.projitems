@@ -10,12 +10,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)TopazioPanel\Documentação\AutoDimension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TopazioPanel\Documentação\StructuralColumnHatches.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TopazioPanel\Visualização\MatchOverrides.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TopazioPanel\TopazioPanel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Links.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Utils.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)TopazioPanel\" />
   </ItemGroup>
 </Project>
