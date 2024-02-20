@@ -48,7 +48,7 @@ namespace TopazioRevitPluginShared
             {
                 aboutButton.ToolTip = "Informações sobre a Pedreira Topazio.";
                 // Reflection of path to image 
-                var globePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "MatchOverrideGraphics.png"); //Mudar path depois para poder pegar outras imagens
+                var globePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Icons/TopazioIcon.png"); //Mudar path depois para poder pegar outras imagens
                 Uri uriImage = new Uri(globePath);
                 // Apply image to bitmap
                 BitmapImage largeImage = new BitmapImage(uriImage);
@@ -59,7 +59,7 @@ namespace TopazioRevitPluginShared
             {
                 SiteButton.ToolTip = "Abrir Site da Pedreira Topazio.";
                 // Reflection of path to image 
-                var globePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "MatchOverrideGraphics.png"); //Mudar path depois para poder pegar outras imagens
+                var globePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Icons/WebLink.png"); //Mudar path depois para poder pegar outras imagens
                 Uri uriImage = new Uri(globePath);
                 // Apply image to bitmap
                 BitmapImage largeImage = new BitmapImage(uriImage);
@@ -71,7 +71,7 @@ namespace TopazioRevitPluginShared
             {
                 LinkedInButton.ToolTip = "Abrir LinkedIn da Pedreira Topazio.";
                 // Reflection of path to image 
-                var globePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "MatchOverrideGraphics.png"); //Mudar path depois para poder pegar outras imagens
+                var globePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Icons/LinkedInIcon.png"); //Mudar path depois para poder pegar outras imagens
                 Uri uriImage = new Uri(globePath);
                 // Apply image to bitmap
                 BitmapImage largeImage = new BitmapImage(uriImage);
@@ -82,8 +82,8 @@ namespace TopazioRevitPluginShared
             if (aboutButton.AddPushButton(new PushButtonData("Instagram", "Instagram", thisAssemblyPath, "TopazioRevitPluginShared.InstagramLink")) is PushButton InstagramButton)
             {
                 InstagramButton.ToolTip = "Abrir Intagram da Pedreira Topazio.";
-                // Reflection of path to image 
-                var globePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "MatchOverrideGraphics.png"); //Mudar path depois para poder pegar outras imagens
+                // Reflection of path to image
+                var globePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Icons/InstagramIcon.png"); //Mudar path depois para poder pegar outras imagens
                 Uri uriImage = new Uri(globePath);
                 // Apply image to bitmap
                 BitmapImage largeImage = new BitmapImage(uriImage);
@@ -97,7 +97,7 @@ namespace TopazioRevitPluginShared
             {
                 MatchOverridesButton.ToolTip = "Esse comando iguala as sobreposições de elementos na vista";
                 // Reflection of path to image 
-                var globePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "MatchOverrideGraphics.png"); //Mudar path depois para poder pegar outras imagens
+                var globePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Icons/MatchOverrideGraphics.png"); //Mudar path depois para poder pegar outras imagens
                 Uri uriImage = new Uri(globePath);
                 // Apply image to bitmap
                 BitmapImage largeImage = new BitmapImage(uriImage);
@@ -111,7 +111,7 @@ namespace TopazioRevitPluginShared
             {
                 SemiAutomaticDimensionsButton.ToolTip = "Esse comando cria novas cotas expecificando dois pontos de referencia e as vigas a serem cotadas.";
                 // Reflection of path to image 
-                var globePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "AutoDimension.png"); //Mudar path depois para poder pegar outras imagens
+                var globePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Icons/AutoDimension.png"); //Mudar path depois para poder pegar outras imagens
                 Uri uriImage = new Uri(globePath);
                 // Apply image to bitmap
                 BitmapImage largeImage = new BitmapImage(uriImage);
