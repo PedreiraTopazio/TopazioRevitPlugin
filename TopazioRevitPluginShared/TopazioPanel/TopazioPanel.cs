@@ -95,7 +95,7 @@ namespace TopazioRevitPluginShared
             RibbonPanel panel_Visualizacao = RibbonPanel(application, "Topazio", "Visualização");
             if (panel_Visualizacao.AddItem(new PushButtonData("Igualar Sobreposição", "Igualar Sobreposição", thisAssemblyPath, "TopazioRevitPluginShared.MatchOverrides")) is PushButton MatchOverridesButton)
             {
-                MatchOverridesButton.ToolTip = "Esse comando iguala as sobreposições de elementos na vista";
+                MatchOverridesButton.ToolTip = "Esse comando iguala as sobreposições de elementos na vista.";
                 // Reflection of path to image 
                 var globePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Icons/MatchOverrideGraphics.png"); //Mudar path depois para poder pegar outras imagens
                 Uri uriImage = new Uri(globePath);
