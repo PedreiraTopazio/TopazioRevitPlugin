@@ -123,7 +123,7 @@ namespace TopazioRevitPluginShared
             {
                 structuralColumnHatchButton.ToolTip = "Esse comando cria novas cotas expecificando dois pontos de referencia e as vigas a serem cotadas.";
                 // Reflection of path to image
-                var globePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Icons/AutoDimension.png"); //Mudar path depois para poder pegar outras imagens
+                var globePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Icons/TopazioIcon.png"); //Mudar path depois para poder pegar outras imagens
                 Uri uriImage = new Uri(globePath);
                 // Apply image to bitmap
                 BitmapImage largeImage = new BitmapImage(uriImage);
