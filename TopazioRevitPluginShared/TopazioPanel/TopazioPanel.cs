@@ -93,7 +93,7 @@ namespace TopazioRevitPluginShared
             }
 
             RibbonPanel panel_Visualizacao = RibbonPanel(application, "Topazio", "Visualização");
-            if (panel_Visualizacao.AddItem(new PushButtonData("Match Overrides", "Match Overrides", thisAssemblyPath, "TopazioRevitPluginShared.MatchOverrides")) is PushButton MatchOverridesButton)
+            if (panel_Visualizacao.AddItem(new PushButtonData("Igualar Sobreposição", "Igualar Sobreposição", thisAssemblyPath, "TopazioRevitPluginShared.MatchOverrides")) is PushButton MatchOverridesButton)
             {
                 MatchOverridesButton.ToolTip = "Esse comando iguala as sobreposições de elementos na vista";
                 // Reflection of path to image 
@@ -107,7 +107,7 @@ namespace TopazioRevitPluginShared
             }
 
             RibbonPanel panel_Documentacao = RibbonPanel(application, "Topazio", "Documentação");
-            if(panel_Documentacao.AddItem(new PushButtonData("Auto Dimensions", "Auto Dimensions", thisAssemblyPath, "TopazioRevitPluginShared.AutoDimension")) is PushButton SemiAutomaticDimensionsButton)
+            if(panel_Documentacao.AddItem(new PushButtonData("Auto Cotar", "Auto Cotar", thisAssemblyPath, "TopazioRevitPluginShared.AutoDimension")) is PushButton SemiAutomaticDimensionsButton)
             {
                 SemiAutomaticDimensionsButton.ToolTip = "Esse comando cria novas cotas expecificando dois pontos de referencia e as vigas a serem cotadas.";
                 // Reflection of path to image 
