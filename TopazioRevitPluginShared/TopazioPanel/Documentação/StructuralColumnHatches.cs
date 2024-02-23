@@ -22,7 +22,24 @@ namespace TopazioRevitPluginShared
             UIDocument uidoc = uiapp.ActiveUIDocument;
             Document doc = uidoc.Document;
 
-            
+            //Excluir todos os hatchs
+            Transaction trans = new Transaction(doc);
+            trans.Start("Excluir Hachuras");
+            try
+            {
+                var hatches = new FilteredElementCollector(doc, doc.ActiveView.Id).OfClass(typeof(FilledRegion)).WhereElementIsNotElementType().ToElements();
+                //TaskDialog.Show("Debug", hatches.Count.ToString());
+                foreach (var hatch in hatches)
+                {
+                    if (hatch.get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS).AsString() == "Criado com TopazioRevitPlugin")
+                    {
+                        doc.Delete(hatch.Id);
+                    }
+                }
+            }
+            catch { }
+            trans.Commit();
+           
 
             try
             {
@@ -41,17 +58,7 @@ namespace TopazioRevitPluginShared
                 }
 
                 //Pega o nivel da vista
-                TaskDialog.Show("Revit", "Cheguei aqui");
                 var nivelId = Utils.GetLevelOfView(doc, view);
-                if (nivelId != null)
-                {
-                    TaskDialog.Show("Revit", nivelId.ToString());
-                }
-                else
-                {
-                    TaskDialog.Show("Revit", "Retornou null.");
-                }
-                
 
                 //Verificar se existe eixos nesse projeto
                 var grids = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Grids).WhereElementIsNotElementType().ToElements();
@@ -62,15 +69,16 @@ namespace TopazioRevitPluginShared
                 }
 
                 //Seleciona todos os pilares visiveis na vista
-                var pilaresVisiveis = new FilteredElementCollector(doc, view.Id).OfCategory(BuiltInCategory.OST_StructuralColumns).WhereElementIsNotElementType().ToElements();
+                List<Element> pilaresVisiveis = (List<Element>)new FilteredElementCollector(doc, view.Id).OfCategory(BuiltInCategory.OST_StructuralColumns).WhereElementIsNotElementType().ToElements();
                 var pilaresDict = new List<Dictionary<string, dynamic>>();
 
-                Transaction trans = new Transaction(doc);
-                trans.Start("Pilar NMC");
+                
 
                 //Classificar os pilares em terminam e começam
                 foreach (var pilar in pilaresVisiveis)
                 {
+
+
                     var location = pilar.Location;
                     var point = location as LocationPoint;
 
@@ -80,15 +88,21 @@ namespace TopazioRevitPluginShared
                     var rotacao = point.Rotation;
                     string NM = "";
 
-                    if (pilar.get_Parameter(BuiltInParameter.FAMILY_TOP_LEVEL_PARAM).AsElementId() == nivelId)
-                    {
-                        NM = "Morre";
+                    try
+                    { //Se os pilares não tiverem esses parametros, simplesmente será ignorado
+                        if (pilar.get_Parameter(BuiltInParameter.FAMILY_TOP_LEVEL_PARAM).AsElementId() == nivelId)
+                        {
+                            NM = "Morre";
+                        }
+                        if (pilar.get_Parameter(BuiltInParameter.FAMILY_BASE_LEVEL_PARAM).AsElementId() == nivelId)
+                        {
+                            NM = "Nasce";
+                        }
                     }
-                    if (pilar.get_Parameter(BuiltInParameter.FAMILY_BASE_LEVEL_PARAM).AsElementId() == nivelId)
+                    catch
                     {
-                        NM = "Nasce";
+                        continue;
                     }
-
 
                     foreach (Dictionary<string, dynamic> dict in pilaresDict)
                     {
@@ -101,7 +115,6 @@ namespace TopazioRevitPluginShared
                             NM = "Continua";
                         }
                     }
-                    //TaskDialog.Show("TESTE", NM);
                     Dictionary<string, dynamic> aux = new Dictionary<string, dynamic>
                     {
                         { "Id", pilar.Id },
@@ -114,24 +127,74 @@ namespace TopazioRevitPluginShared
                 }
 
                 //TESTE PARA VER SE ESTÁ FUNCIONANDO
-                //foreach (Dictionary<string, dynamic> dict in pilaresDict)
+                var overrideGraphicsReset = new OverrideGraphicSettings();
+                Color cinzaMorre = new Color(128, 128, 128);
+
+                var morrePatternId = new FilteredElementCollector(doc)
+                    .OfClass(typeof(FillPatternElement))
+                    .FirstOrDefault(pattern => pattern.Name == "PED_MORRE")
+                    .Id;
+                var nascePatternId = new FilteredElementCollector(doc)
+                    .OfClass(typeof(FilledRegionType))
+                    .FirstOrDefault(pattern => pattern.Name == "PED_HTC10_PILAR.NASCE")
+                    .Id;
+                //TaskDialog.Show("Debug", nascePatternId.Count().ToString());
+                //foreach(var pattern in morrePatternId)
                 //{
-                //    doc.GetElement(dict["Id"]).get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS).Set(dict["NM"]);
+                //    TaskDialog.Show("Debug", pattern.Name);
                 //}
-                //trans.Commit();
 
-                //Pilares que continua -> Não faz nada
+                //trans = new Transaction(doc);
+                trans.Start("Pilar NMC");
+                foreach (Dictionary<string, dynamic> dict in pilaresDict)
+                {
+                    string NM = dict["NM"];
+                    ElementId ID = dict["Id"];
+                    Element pilar = doc.GetElement(ID);
+                    pilar.get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS).Set(NM);
+                    //Pilares que continua -> Reseta o override graphics
+                    if (NM == "Continua")
+                    {
+                        doc.ActiveView.SetElementOverrides(ID, overrideGraphicsReset);
+                    }
+                    //Pilares que morrem->Sobrepõe grafico com hatch de morre
+                    if (NM == "Morre")
+                    {
+                        OverrideGraphicSettings CurrentOverride = doc.ActiveView.GetElementOverrides(ID);
+                        //CORTE
+                        CurrentOverride.SetCutForegroundPatternId(morrePatternId); //PREENCHIMENTO MORRE ID
+                        CurrentOverride.SetCutForegroundPatternColor(cinzaMorre);
+                        //VISTA
+                        CurrentOverride.SetCutBackgroundPatternId(morrePatternId); //PREENCHIMENTO MORRE ID
+                        CurrentOverride.SetCutBackgroundPatternColor(cinzaMorre);
+                        doc.ActiveView.SetElementOverrides(ID, CurrentOverride);
+                    }
+                    //Pilares que nasce -> Cria grafico 2D em planta para esses pilares
+                    if (NM == "Nasce")
+                    {
+                        pilar = doc.GetElement(ID);
+                        doc.ActiveView.SetElementOverrides(ID, overrideGraphicsReset);
+                        var CurveLoop = Utils.GetBottonFaceCurveLoop(doc, ID);
+                        try
+                        {
+                            var hatchId = FilledRegion.Create(doc, nascePatternId, doc.ActiveView.Id, CurveLoop).Id;
+                            doc.GetElement(hatchId).get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS).Set("Criado com TopazioRevitPlugin");
+                            TaskDialog.Show("DEBUG", dict["ID"].ToString());
+                        }catch (Exception ex) { }
+                        
+                    }
+                    
 
-                //Pilares que morrem -> Sobrepõe grafico com hatch de morre
 
-                //Pilares que nasce -> Cria grafico 2D em planta para esses pilares
-
+                }
+                trans.Commit();
                 return Result.Succeeded;
+                
             }
-            catch (Exception exception) 
+            catch (Exception exception)
             {
-                TaskDialog.Show("REVIT", exception.Message);
-                return Result.Failed; 
+                TaskDialog.Show("REVIT", exception.Message + " " + exception.Source + " " + exception.InnerException);
+                return Result.Failed;
             };
             
         }
