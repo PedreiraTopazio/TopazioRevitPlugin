@@ -119,6 +119,19 @@ namespace TopazioRevitPluginShared
                 SemiAutomaticDimensionsButton.LargeImage = largeImage;
 
             }
+            if (panel_Documentacao.AddItem(new PushButtonData("Normalizar Pilares", "Normalizar Pilares", thisAssemblyPath, "TopazioRevitPluginShared.StructuralColumnCompare")) is PushButton structuralColumnCompare)
+            {
+                structuralColumnCompare.ToolTip = "Esse comando ajusta um proble decorrente da importação via TQR, ele compara os pilares não retangulares para diminuir quantidade de tipos e familias substituindo familias e tipos repitidos.";
+                // Reflection of path to image
+                var globePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Icons/TopazioIcon.png"); //Mudar path depois para poder pegar outras imagens
+                Uri uriImage = new Uri(globePath);
+                // Apply image to bitmap
+                BitmapImage largeImage = new BitmapImage(uriImage);
+                // Apply image to button
+                structuralColumnCompare.LargeImage = largeImage;
+
+            }
+
             if (panel_Documentacao.AddItem(new PushButtonData("Pilar NMC", "Pilar NMC", thisAssemblyPath, "TopazioRevitPluginShared.StructuralColumnHatches")) is PushButton structuralColumnHatchButton)
             {
                 structuralColumnHatchButton.ToolTip = "Esse comando cria novas cotas expecificando dois pontos de referencia e as vigas a serem cotadas.";
