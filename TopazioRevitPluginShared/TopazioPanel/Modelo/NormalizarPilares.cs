@@ -3,6 +3,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace TopazioRevitPluginShared
@@ -19,15 +20,27 @@ namespace TopazioRevitPluginShared
             Document doc = uidoc.Document;
 
             var pilaresDicts = new List<Dictionary<string, dynamic>>();
-
             var pilaresTipo = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_StructuralColumns).WhereElementIsElementType();
+
+            var deletarTipos = new List<dynamic>();
             foreach (var pilar in pilaresTipo)
             {
                 //TaskDialog.Show("DEBUG", pilar.Name);
-                if (!pilar.Name.Contains("TQS"))
+                if (pilar.Name.Contains("TQS") == false)
                 {
                     continue;
                 }
+
+                //SALVA FAMILY TIPES NÃO UTILIZADOS PARA DELETAR
+                
+                var filtro = new FamilyInstanceFilter(doc, pilar.Id);
+                var instanciasPilares = new FilteredElementCollector(doc).WherePasses(filtro).ToElements();
+                if (instanciasPilares.Count() == 0)
+                {
+                    deletarTipos.Add(pilar);
+                    continue;
+                }
+
                 var sketchPilar = Utils.GetBottonFaceCurveLoop(doc, pilar.Id);
                 var aux = new Dictionary<string, dynamic> 
                 {
@@ -37,6 +50,23 @@ namespace TopazioRevitPluginShared
                 };
                 pilaresDicts.Add(aux);
             }
+            Transaction trans = new Transaction(doc);
+            trans.Start("Deletar pilares tipo não utilizados");
+            foreach (var pilarTipo in deletarTipos)
+            {
+                var family = pilarTipo.Family;
+                var familyTypes = family.GetFamilySymbolIds();
+                if (familyTypes.Count == 1)
+                {
+                    doc.Delete(family.Id);
+                }
+                else
+                {
+                    doc.Delete(pilarTipo.Id);
+                }
+                
+            }
+            trans.Commit();
 
             var uniquePilares = new List<Dictionary<string, dynamic>>();
             foreach (var pilar in pilaresDicts)
@@ -66,11 +96,28 @@ namespace TopazioRevitPluginShared
                 }
 
             }
-            //PARA CADA TIPO PILAR EM UNIQUEPILAR
-                //PARA CADA TIPO EM VARIATIONS
-                //SELECIONAR TODAS AS INSTANCIAS E SUBSTITUIR PELA INSTANCIA "MÃE"
 
-            TaskDialog.Show("DEBUG", uniquePilares.Count.ToString());
+            trans.Start("Normalizar Pilares");
+            foreach (var uniquePilarTipo in uniquePilares)
+            {
+                foreach (var variationPilarTipoId in uniquePilarTipo["Variations"])
+                {
+                    var filtro = new FamilyInstanceFilter(doc, variationPilarTipoId);
+                    var pilaresVariations = new FilteredElementCollector(doc).WherePasses(filtro).ToElements();
+                    foreach (var pilar in pilaresVariations)
+                    {
+                        //APENAS SUBSTITUI INSTANCIAS VERTICAIS
+                        if (pilar.get_Parameter(BuiltInParameter.SLANTED_COLUMN_TYPE_PARAM).AsValueString() == "Vertical")
+                        {
+                            pilar.ChangeTypeId(uniquePilarTipo["ID"]);
+                        }
+                        
+                    }
+                }
+            }
+            trans.Commit();
+
+            //TaskDialog.Show("DEBUG", uniquePilares.Count.ToString());
             return Result.Succeeded;
         }
     }
