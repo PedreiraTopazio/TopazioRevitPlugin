@@ -33,6 +33,7 @@ namespace TopazioRevitPluginShared
             topazioPanels.Add("Sobre");
             topazioPanels.Add("Visualização");
             topazioPanels.Add("Documentação");
+            topazioPanels.Add("Modelo");
 
             foreach (string panel in topazioPanels)
             {
@@ -119,18 +120,6 @@ namespace TopazioRevitPluginShared
                 SemiAutomaticDimensionsButton.LargeImage = largeImage;
 
             }
-            if (panel_Documentacao.AddItem(new PushButtonData("Normalizar Pilares", "Normalizar Pilares", thisAssemblyPath, "TopazioRevitPluginShared.StructuralColumnCompare")) is PushButton structuralColumnCompare)
-            {
-                structuralColumnCompare.ToolTip = "Esse comando ajusta um proble decorrente da importação via TQR, ele compara os pilares não retangulares para diminuir quantidade de tipos e familias substituindo familias e tipos repitidos.";
-                // Reflection of path to image
-                var globePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Icons/TopazioIcon.png"); //Mudar path depois para poder pegar outras imagens
-                Uri uriImage = new Uri(globePath);
-                // Apply image to bitmap
-                BitmapImage largeImage = new BitmapImage(uriImage);
-                // Apply image to button
-                structuralColumnCompare.LargeImage = largeImage;
-
-            }
 
             if (panel_Documentacao.AddItem(new PushButtonData("Pilar NMC", "Pilar NMC", thisAssemblyPath, "TopazioRevitPluginShared.StructuralColumnHatches")) is PushButton structuralColumnHatchButton)
             {
@@ -142,6 +131,20 @@ namespace TopazioRevitPluginShared
                 BitmapImage largeImage = new BitmapImage(uriImage);
                 // Apply image to button
                 structuralColumnHatchButton.LargeImage = largeImage;
+
+            }
+
+            RibbonPanel panel_Modelo = RibbonPanel(application, "Topazio", "Modelo");
+            if (panel_Modelo.AddItem(new PushButtonData("NormalizarPilares", "NormalizarPilares", thisAssemblyPath, "TopazioRevitPluginShared.NormalizarPilares")) is PushButton NormalizarPilaresButton)
+            {
+                NormalizarPilaresButton.ToolTip = "Esse comando compara os pilares, deletando os duplicados";
+                // Reflection of path to image 
+                var globePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Icons/TopazioIcon.png"); //Mudar path depois para poder pegar outras imagens
+                Uri uriImage = new Uri(globePath);
+                // Apply image to bitmap
+                BitmapImage largeImage = new BitmapImage(uriImage);
+                // Apply image to button 
+                NormalizarPilaresButton.LargeImage = largeImage;
 
             }
 
