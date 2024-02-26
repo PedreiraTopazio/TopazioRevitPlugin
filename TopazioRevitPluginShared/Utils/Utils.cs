@@ -26,9 +26,7 @@ namespace TopazioRevitPluginShared
 
         public static ElementId GetLevelOfView(Document doc, View view)
         {
-            TaskDialog.Show("Revit", "Entrei no método");
             var level = view.get_Parameter(BuiltInParameter.PLAN_VIEW_LEVEL).AsValueString();
-            TaskDialog.Show("Revit", level.ToString());
             var allLevels = new FilteredElementCollector(doc).OfClass(typeof(Level)).ToElements();
             foreach (Level docLevel in allLevels)
             {
@@ -80,7 +78,6 @@ namespace TopazioRevitPluginShared
                             }
 
                             // Return the CurveLoop representing the perimeter of the face
-                            //TaskDialog.Show("DEBUG", curveLoop.NumberOfCurves().ToString());
                             return new List<CurveLoop>() { curveLoop };
                         }
                         return null;
@@ -180,5 +177,6 @@ namespace TopazioRevitPluginShared
             //TaskDialog.Show("DEBUG", "SÃO IGUAIS");
             return true;
         }
+
     }
 }
