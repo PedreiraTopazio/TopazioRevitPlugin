@@ -33,6 +33,7 @@ namespace TopazioRevitPluginShared
             topazioPanels.Add("Sobre");
             topazioPanels.Add("Visualização");
             topazioPanels.Add("Documentação");
+            topazioPanels.Add("Modelo");
 
             foreach (string panel in topazioPanels)
             {
@@ -119,6 +120,7 @@ namespace TopazioRevitPluginShared
                 SemiAutomaticDimensionsButton.LargeImage = largeImage;
 
             }
+
             if (panel_Documentacao.AddItem(new PushButtonData("Pilar NMC", "Pilar NMC", thisAssemblyPath, "TopazioRevitPluginShared.StructuralColumnHatches")) is PushButton structuralColumnHatchButton)
             {
                 structuralColumnHatchButton.ToolTip = "Esse comando cria novas cotas expecificando dois pontos de referencia e as vigas a serem cotadas.";
@@ -129,6 +131,20 @@ namespace TopazioRevitPluginShared
                 BitmapImage largeImage = new BitmapImage(uriImage);
                 // Apply image to button
                 structuralColumnHatchButton.LargeImage = largeImage;
+
+            }
+
+            RibbonPanel panel_Modelo = RibbonPanel(application, "Topazio", "Modelo");
+            if (panel_Modelo.AddItem(new PushButtonData("NormalizarPilares", "NormalizarPilares", thisAssemblyPath, "TopazioRevitPluginShared.NormalizarPilares")) is PushButton NormalizarPilaresButton)
+            {
+                NormalizarPilaresButton.ToolTip = "Esse comando compara os pilares, deletando os duplicados";
+                // Reflection of path to image 
+                var globePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Icons/TopazioIcon.png"); //Mudar path depois para poder pegar outras imagens
+                Uri uriImage = new Uri(globePath);
+                // Apply image to bitmap
+                BitmapImage largeImage = new BitmapImage(uriImage);
+                // Apply image to button 
+                NormalizarPilaresButton.LargeImage = largeImage;
 
             }
 
