@@ -164,8 +164,8 @@ namespace TopazioRevitPluginShared
                         CurrentOverride.SetCutForegroundPatternId(morrePatternId); //PREENCHIMENTO MORRE ID
                         CurrentOverride.SetCutForegroundPatternColor(cinzaMorre);
                         //VISTA
-                        CurrentOverride.SetCutBackgroundPatternId(morrePatternId); //PREENCHIMENTO MORRE ID
-                        CurrentOverride.SetCutBackgroundPatternColor(cinzaMorre);
+                        CurrentOverride.SetSurfaceForegroundPatternId(morrePatternId); //PREENCHIMENTO MORRE ID
+                        CurrentOverride.SetSurfaceForegroundPatternColor(cinzaMorre);
                         doc.ActiveView.SetElementOverrides(ID, CurrentOverride);
                     }
                     //Pilares que nasce -> Cria grafico 2D em planta para esses pilares
