@@ -85,6 +85,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
+            }
         }
         "Release"
         {
@@ -101,6 +117,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
@@ -309,7 +333,7 @@
         {
             "{994432C3-9487-495D-8656-3E829A8DBDDE}:_4C0C078EED0E4BF89322830373343019"
             {
-            "DefaultLocation" = "8:C:\\Users\\henrique.furlaneto\\AppData\\Roaming\\Autodesk\\Revit\\Addins"
+            "DefaultLocation" = "8:[AppDataFolder]\\Autodesk\\Revit\\Addins"
             "Name" = "8:RevitAddinsFolder"
             "AlwaysCreate" = "11:FALSE"
             "Condition" = "8:"
@@ -381,12 +405,12 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:RevitPlugin"
         "ProductCode" = "8:{0BBCC200-3CC8-45FA-80CD-9E7801D327A5}"
-        "PackageCode" = "8:{676366B8-8040-4B0A-9B18-2F720E2CF506}"
+        "PackageCode" = "8:{437C839E-CB57-452F-8A0C-C4E3525AF726}"
         "UpgradeCode" = "8:{DF289255-713B-4EF9-98F2-289A2A61DA67}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
-        "DetectNewerInstalledVersion" = "11:FALSE"
+        "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
         "ProductVersion" = "8:1.0.0"
         "Manufacturer" = "8:Topazio"
