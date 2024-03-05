@@ -151,7 +151,6 @@ namespace TopazioRevitPluginShared
                     string NM = dict["NM"];
                     ElementId ID = dict["Id"];
                     Element pilar = doc.GetElement(ID);
-                    pilar.get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS).Set(NM);
                     //Pilares que continua -> Reseta o override graphics
                     if (NM == "Continua")
                     {
