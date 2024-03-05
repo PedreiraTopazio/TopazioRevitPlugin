@@ -151,7 +151,6 @@ namespace TopazioRevitPluginShared
                     string NM = dict["NM"];
                     ElementId ID = dict["Id"];
                     Element pilar = doc.GetElement(ID);
-                    pilar.get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS).Set(NM);
                     //Pilares que continua -> Reseta o override graphics
                     if (NM == "Continua")
                     {
@@ -165,8 +164,8 @@ namespace TopazioRevitPluginShared
                         CurrentOverride.SetCutForegroundPatternId(morrePatternId); //PREENCHIMENTO MORRE ID
                         CurrentOverride.SetCutForegroundPatternColor(cinzaMorre);
                         //VISTA
-                        CurrentOverride.SetCutBackgroundPatternId(morrePatternId); //PREENCHIMENTO MORRE ID
-                        CurrentOverride.SetCutBackgroundPatternColor(cinzaMorre);
+                        CurrentOverride.SetSurfaceForegroundPatternId(morrePatternId); //PREENCHIMENTO MORRE ID
+                        CurrentOverride.SetSurfaceForegroundPatternColor(cinzaMorre);
                         doc.ActiveView.SetElementOverrides(ID, CurrentOverride);
                     }
                     //Pilares que nasce -> Cria grafico 2D em planta para esses pilares
