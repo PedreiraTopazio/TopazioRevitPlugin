@@ -76,10 +76,6 @@
       <SourceXmls Include="$(TargetDir)*.xml" />
       <SourcePngs Include="..\Icons\*.png" />
     </ItemGroup>
-    <RemoveDir Directories="C:\Topazio\RevitPlugin\2022" />
-    <Copy SourceFiles="@(SourceDlls)" DestinationFolder="C:\Topazio\RevitPlugin\2022" />
-    <Copy SourceFiles="@(SourcePngs)" DestinationFolder="C:\Topazio\RevitPlugin\2022\Icons" />
-    <Copy SourceFiles="@(SourcePdbs)" DestinationFolder="C:\Topazio\RevitPlugin\2022" />
-    <Copy SourceFiles="@(SourceXmls)" DestinationFolder="C:\Topazio\RevitPlugin\2022" />
+    <Copy SourceFiles="@(SourcePngs)" DestinationFolder="$(TargetDir)\Icons" />
   </Target>
 </Project>
