@@ -124,6 +124,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
     }
@@ -404,15 +412,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:RevitPlugin"
-        "ProductCode" = "8:{0BBCC200-3CC8-45FA-80CD-9E7801D327A5}"
-        "PackageCode" = "8:{437C839E-CB57-452F-8A0C-C4E3525AF726}"
+        "ProductCode" = "8:{0AB30902-4133-4845-B060-BA8F18B9F2D8}"
+        "PackageCode" = "8:{0A0117E6-094F-4A3A-B3D4-EB0C7989411B}"
         "UpgradeCode" = "8:{DF289255-713B-4EF9-98F2-289A2A61DA67}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.0"
+        "ProductVersion" = "8:1.0.1"
         "Manufacturer" = "8:Topazio"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
