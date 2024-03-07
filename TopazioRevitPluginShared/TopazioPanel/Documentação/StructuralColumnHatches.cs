@@ -39,13 +39,19 @@ namespace TopazioRevitPluginShared
             }
 
             //CRIANDO O SCHEMA
-            SchemaBuilder storeCreator = new SchemaBuilder(new Guid("196ce32e-39c1-44ea-8a47-cbb11f0b428a")); //TALVEZ SE EU COLOCAR O MESMO GUID AQUI E NA HORA QUE ESTIVER BUSCANDO DE CERTO
-            storeCreator.SetReadAccessLevel(AccessLevel.Vendor);
-            storeCreator.SetWriteAccessLevel(AccessLevel.Vendor);
-            storeCreator.SetVendorId("TopazioBIM");
-            storeCreator.SetSchemaName("HatchSchema");
-            FieldBuilder fieldBuilder = storeCreator.AddSimpleField("Creator", typeof(string));
-            Schema schema = storeCreator.Finish();  //RETORNA O SCHEMA CRIADO
+            Guid schemaGUID = new Guid("196ce32e-39c1-44ea-8a47-cbb11f0b428a");
+            Schema schema = Schema.Lookup(schemaGUID);
+            if (schema == null)
+            {
+                SchemaBuilder storeCreator = new SchemaBuilder(schemaGUID); //TALVEZ SE EU COLOCAR O MESMO GUID AQUI E NA HORA QUE ESTIVER BUSCANDO DE CERTO
+                storeCreator.SetReadAccessLevel(AccessLevel.Vendor);
+                storeCreator.SetWriteAccessLevel(AccessLevel.Vendor);
+                storeCreator.SetVendorId("TopazioBIM");
+                storeCreator.SetSchemaName("HatchSchema");
+                FieldBuilder fieldBuilder = storeCreator.AddSimpleField("Creator", typeof(string));
+                schema = storeCreator.Finish();  //RETORNA O SCHEMA CRIADO
+            }
+            
 
 
             Entity entity = new Entity(schema);
