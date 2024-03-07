@@ -9,8 +9,15 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "TopazioRevitPluginShared", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Icons", "Icons", "{81F99D9F-4021-4701-A1D0-9E28A5208471}"
 	ProjectSection(SolutionItems) = preProject
+		Icons\AutoDimension.png = Icons\AutoDimension.png
+		Icons\InstagramIcon.png = Icons\InstagramIcon.png
+		Icons\LinkedInIcon.png = Icons\LinkedInIcon.png
 		Icons\MatchOverrideGraphics.png = Icons\MatchOverrideGraphics.png
+		Icons\TopazioIcon.png = Icons\TopazioIcon.png
+		Icons\WebLink.png = Icons\WebLink.png
 	EndProjectSection
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "TopazioRevitPluginInstaller", "TopazioRevitPluginInstaller\TopazioRevitPluginInstaller.vdproj", "{85F7DD98-4B22-48BF-9D31-FA12507198EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,6 +29,8 @@ Global
 		{64911CB4-12AB-413F-89CD-7F6B8A20C503}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64911CB4-12AB-413F-89CD-7F6B8A20C503}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64911CB4-12AB-413F-89CD-7F6B8A20C503}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85F7DD98-4B22-48BF-9D31-FA12507198EB}.Debug|Any CPU.ActiveCfg = Debug
+		{85F7DD98-4B22-48BF-9D31-FA12507198EB}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
