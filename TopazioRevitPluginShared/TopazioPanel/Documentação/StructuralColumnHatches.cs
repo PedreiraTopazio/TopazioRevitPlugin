@@ -1,7 +1,9 @@
 ﻿using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.ExtensibleStorage;
 using Autodesk.Revit.UI;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,41 +24,54 @@ namespace TopazioRevitPluginShared
             UIDocument uidoc = uiapp.ActiveUIDocument;
             Document doc = uidoc.Document;
 
+            View view = commandData.Application.ActiveUIDocument.Document.ActiveView;
+            View3D view3D = view as View3D;
+            if (null != view3D)
+            {
+                message += "Criar hachuras somente em vista 2D";
+                return Result.Failed;
+            }
+            ViewSheet viewSheet = view as ViewSheet;
+            if (null != viewSheet)
+            {
+                message += "Criar hachuras somente em vista 2D";
+                return Autodesk.Revit.UI.Result.Failed;
+            }
+
+            //CRIANDO O SCHEMA
+            SchemaBuilder storeCreator = new SchemaBuilder(new Guid("196ce32e-39c1-44ea-8a47-cbb11f0b428a")); //TALVEZ SE EU COLOCAR O MESMO GUID AQUI E NA HORA QUE ESTIVER BUSCANDO DE CERTO
+            storeCreator.SetReadAccessLevel(AccessLevel.Vendor);
+            storeCreator.SetWriteAccessLevel(AccessLevel.Vendor);
+            storeCreator.SetVendorId("TopazioBIM");
+            storeCreator.SetSchemaName("HatchSchema");
+            FieldBuilder fieldBuilder = storeCreator.AddSimpleField("Creator", typeof(string));
+            Schema schema = storeCreator.Finish();  //RETORNA O SCHEMA CRIADO
+
+
+            Entity entity = new Entity(schema);
+            Field fieldStoreCreator = schema.GetField("Creator");
+
             //Excluir todos os hatchs
             Transaction trans = new Transaction(doc);
             trans.Start("Excluir Hachuras");
-            try
+            var hatches = new FilteredElementCollector(doc, doc.ActiveView.Id).OfClass(typeof(FilledRegion)).WhereElementIsNotElementType().ToElements();
+            //TaskDialog.Show("Debug", hatches.Count.ToString());
+            foreach (var hatch in hatches)
             {
-                var hatches = new FilteredElementCollector(doc, doc.ActiveView.Id).OfClass(typeof(FilledRegion)).WhereElementIsNotElementType().ToElements();
-                //TaskDialog.Show("Debug", hatches.Count.ToString());
-                foreach (var hatch in hatches)
+                try
                 {
-                    if (hatch.get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS).AsString() == "Criado com TopazioRevitPlugin")
+                    var creatorValue = hatch.GetEntity(schema).Get<string>(schema.GetField("Creator"));
+                    if (creatorValue == "PilarNMC - TopazioRevitPlugin") 
                     {
                         doc.Delete(hatch.Id);
                     }
-                }
+                }catch (Exception) { }
             }
-            catch { }
             trans.Commit();
            
 
             try
-            {
-                View view = commandData.Application.ActiveUIDocument.Document.ActiveView;
-                View3D view3D = view as View3D;
-                if (null != view3D)
-                {
-                    message += "Criar hachuras somente em vista 2D";
-                    return Result.Failed;
-                }
-                ViewSheet viewSheet = view as ViewSheet;
-                if (null != viewSheet)
-                {
-                    message += "Criar hachuras somente em vista 2D";
-                    return Autodesk.Revit.UI.Result.Failed;
-                }
-
+            {   
                 //Pega o nivel da vista
                 var nivelId = Utils.GetLevelOfView(doc, view);
 
@@ -126,7 +141,6 @@ namespace TopazioRevitPluginShared
                     pilaresDict.Add(aux);
                 }
 
-                //TESTE PARA VER SE ESTÁ FUNCIONANDO
                 var overrideGraphicsReset = new OverrideGraphicSettings();
                 Color cinzaMorre = new Color(128, 128, 128);
 
@@ -138,13 +152,7 @@ namespace TopazioRevitPluginShared
                     .OfClass(typeof(FilledRegionType))
                     .FirstOrDefault(pattern => pattern.Name == "PED_HTC10_PILAR.NASCE")
                     .Id;
-                //TaskDialog.Show("Debug", nascePatternId.Count().ToString());
-                //foreach(var pattern in morrePatternId)
-                //{
-                //    TaskDialog.Show("Debug", pattern.Name);
-                //}
 
-                //trans = new Transaction(doc);
                 trans.Start("Pilar NMC");
                 foreach (Dictionary<string, dynamic> dict in pilaresDict)
                 {
@@ -177,8 +185,10 @@ namespace TopazioRevitPluginShared
                         try
                         {
                             var hatchId = FilledRegion.Create(doc, nascePatternId, doc.ActiveView.Id, CurveLoop).Id;
-                            doc.GetElement(hatchId).get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS).Set("Criado com TopazioRevitPlugin");
-                            TaskDialog.Show("DEBUG", dict["ID"].ToString());
+                            //AQUI EU VOU DEFINIR O Extensible Storage NOS HATCHS
+                            entity.Set<string>(fieldStoreCreator, "PilarNMC - TopazioRevitPlugin");
+                            doc.GetElement(hatchId).SetEntity(entity);
+                            
                         }catch (Exception ex) { }
                         
                     }
