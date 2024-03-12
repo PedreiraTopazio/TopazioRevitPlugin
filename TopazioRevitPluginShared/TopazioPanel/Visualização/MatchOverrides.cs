@@ -4,8 +4,6 @@ using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Windows.Controls;
 
 namespace TopazioRevitPluginShared
 {
