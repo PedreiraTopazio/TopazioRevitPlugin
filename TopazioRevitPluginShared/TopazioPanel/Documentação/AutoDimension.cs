@@ -108,7 +108,15 @@ namespace TopazioRevitPluginShared
                 }
                 Transaction trans = new Transaction(doc);
                 trans.Start("Automatic Dimension");
-                Dimension newDimension = doc.Create.NewDimension(doc.ActiveView, Line, referenceArray);
+                try
+                {
+                    Dimension newDimension = doc.Create.NewDimension(doc.ActiveView, Line, referenceArray);
+                }
+                catch (Exception ex) 
+                {
+                    TaskDialog.Show("Topazio Plugin", ex.ToString());
+                }
+                
                 trans.Commit();
 
 
