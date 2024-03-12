@@ -15,6 +15,18 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_0825FE745F9642C6B88E5F99FA1EA8CF"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_1B9012BABAAF424DA78B25B8A5646DC3"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_1EAD2B6373704DBE886051FF73F6119E"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -27,13 +39,37 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_584D5B314A5D42E092D5F4A1A19AECF3"
+        "MsmKey" = "8:_5BD347437B8D43498EC48E55E1A4BE7D"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_8403FB2E4DFC4F0BAC6C31A306356565"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_8674FE97A45D4C17B1C5A77A543474CC"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_86F68D9AC9AA4F16BE1D1B2A4642BADA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_88A3A8AA2EF34A2FB1F38EAF1C5950E1"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_8C9F0461649C405090AE76FF837E4176"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -51,6 +87,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_A125D93D392047EC9B999F044BC512BB"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_A1450E2FC83D46C5977A527B893EE405"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -63,8 +105,44 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_BF712110CA4941408C80D3A885A42CDF"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_EAC2DD917E594FB6A1AF5031C6D6C3B7"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_584D5B314A5D42E092D5F4A1A19AECF3"
+        "OwnerKey" = "8:_BF712110CA4941408C80D3A885A42CDF"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_EAC2DD917E594FB6A1AF5031C6D6C3B7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_8C9F0461649C405090AE76FF837E4176"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_5BD347437B8D43498EC48E55E1A4BE7D"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_1B9012BABAAF424DA78B25B8A5646DC3"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -162,12 +240,63 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0825FE745F9642C6B88E5F99FA1EA8CF"
+            {
+            "SourcePath" = "8:..\\Icons\\TopazioIcon.ico"
+            "TargetName" = "8:TopazioIcon.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_4BECB0F233DA413AB484E227E8C150EC"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_1B9012BABAAF424DA78B25B8A5646DC3"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:TopazioRevitPlugin2021, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_1B9012BABAAF424DA78B25B8A5646DC3"
+                    {
+                    "Name" = "8:TopazioRevitPlugin2021.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\TopazioRevitPlugin2021\\bin\\Debug\\TopazioRevitPlugin2021.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_57EBE2FC0EBD41D2912065629F66F8EF"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1EAD2B6373704DBE886051FF73F6119E"
             {
             "SourcePath" = "8:..\\Icons\\LinkedInIcon.png"
             "TargetName" = "8:LinkedInIcon.png"
             "Tag" = "8:"
-            "Folder" = "8:_CFB72A1785814146B294896AE8863018"
+            "Folder" = "8:_4BECB0F233DA413AB484E227E8C150EC"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -187,7 +316,7 @@
             "SourcePath" = "8:..\\Icons\\AutoDimension.png"
             "TargetName" = "8:AutoDimension.png"
             "Tag" = "8:"
-            "Folder" = "8:_CFB72A1785814146B294896AE8863018"
+            "Folder" = "8:_4BECB0F233DA413AB484E227E8C150EC"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -202,23 +331,83 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_584D5B314A5D42E092D5F4A1A19AECF3"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_5BD347437B8D43498EC48E55E1A4BE7D"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:TopazioRevitPlugin2022, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:TopazioRevitPlugin2020, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_584D5B314A5D42E092D5F4A1A19AECF3"
+                    "_5BD347437B8D43498EC48E55E1A4BE7D"
                     {
-                    "Name" = "8:TopazioRevitPlugin2022.dll"
+                    "Name" = "8:TopazioRevitPlugin2020.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\TopazioRevitPlugin2022\\bin\\Release\\TopazioRevitPlugin2022.dll"
+            "SourcePath" = "8:..\\TopazioRevitPlugin2020\\bin\\Debug\\TopazioRevitPlugin2020.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_6555D7481A7E4D24B28ACC281E322B73"
+            "Folder" = "8:_056F8C7043CB409685A1A13908DD4817"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8403FB2E4DFC4F0BAC6C31A306356565"
+            {
+            "SourcePath" = "8:..\\TopazioRevitPlugin2020\\TopazioPlugin.addin"
+            "TargetName" = "8:TopazioPlugin.addin"
+            "Tag" = "8:"
+            "Folder" = "8:_398973F321D94852A4E9A8A3D7B86245"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8674FE97A45D4C17B1C5A77A543474CC"
+            {
+            "SourcePath" = "8:..\\TopazioRevitPlugin2023\\TopazioPlugin.addin"
+            "TargetName" = "8:TopazioPlugin.addin"
+            "Tag" = "8:"
+            "Folder" = "8:_075BA00C33F54BA28EFBEA11A6A15C6F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_86F68D9AC9AA4F16BE1D1B2A4642BADA"
+            {
+            "SourcePath" = "8:..\\TopazioRevitPlugin2024\\TopazioPlugin.addin"
+            "TargetName" = "8:TopazioPlugin.addin"
+            "Tag" = "8:"
+            "Folder" = "8:_8EA8241DF5444BEC8286ACD8C6AAF079"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -238,7 +427,38 @@
             "SourcePath" = "8:..\\Icons\\MatchOverrideGraphics.png"
             "TargetName" = "8:MatchOverrideGraphics.png"
             "Tag" = "8:"
-            "Folder" = "8:_CFB72A1785814146B294896AE8863018"
+            "Folder" = "8:_4BECB0F233DA413AB484E227E8C150EC"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8C9F0461649C405090AE76FF837E4176"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:TopazioRevitPlugin2024, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_8C9F0461649C405090AE76FF837E4176"
+                    {
+                    "Name" = "8:TopazioRevitPlugin2024.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\TopazioRevitPlugin2024\\bin\\Debug\\TopazioRevitPlugin2024.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_19A443C6CA47464990F3514DF2D3F2F1"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -278,7 +498,27 @@
             "SourcePath" = "8:..\\Icons\\InstagramIcon.png"
             "TargetName" = "8:InstagramIcon.png"
             "Tag" = "8:"
-            "Folder" = "8:_CFB72A1785814146B294896AE8863018"
+            "Folder" = "8:_4BECB0F233DA413AB484E227E8C150EC"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A125D93D392047EC9B999F044BC512BB"
+            {
+            "SourcePath" = "8:..\\TopazioRevitPlugin2021\\TopazioPlugin.addin"
+            "TargetName" = "8:TopazioPlugin.addin"
+            "Tag" = "8:"
+            "Folder" = "8:_F21E1AE2FD1144B68ABF31EA8D72CC6A"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -298,7 +538,7 @@
             "SourcePath" = "8:..\\Icons\\WebLink.png"
             "TargetName" = "8:WebLink.png"
             "Tag" = "8:"
-            "Folder" = "8:_CFB72A1785814146B294896AE8863018"
+            "Folder" = "8:_4BECB0F233DA413AB484E227E8C150EC"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -318,7 +558,69 @@
             "SourcePath" = "8:..\\Icons\\TopazioIcon.png"
             "TargetName" = "8:TopazioIcon.png"
             "Tag" = "8:"
-            "Folder" = "8:_CFB72A1785814146B294896AE8863018"
+            "Folder" = "8:_4BECB0F233DA413AB484E227E8C150EC"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_BF712110CA4941408C80D3A885A42CDF"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:TopazioRevitPlugin2022, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_BF712110CA4941408C80D3A885A42CDF"
+                    {
+                    "Name" = "8:TopazioRevitPlugin2022.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\TopazioRevitPlugin2022\\bin\\Debug\\TopazioRevitPlugin2022.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_6555D7481A7E4D24B28ACC281E322B73"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_EAC2DD917E594FB6A1AF5031C6D6C3B7"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:TopazioRevitPlugin2023, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_EAC2DD917E594FB6A1AF5031C6D6C3B7"
+                    {
+                    "Name" = "8:TopazioRevitPlugin2023.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\TopazioRevitPlugin2023\\bin\\Debug\\TopazioRevitPlugin2023.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_A466F8953B9C4272A26F3B24F8633940"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -349,6 +651,28 @@
             "Property" = "8:NEWPROPERTY2"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_075BA00C33F54BA28EFBEA11A6A15C6F"
+                    {
+                    "Name" = "8:2023"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_B88EE333DB5C417BB56D04F99F0C32C7"
+                        "Folders"
+                        {
+                        }
+                    }
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_398973F321D94852A4E9A8A3D7B86245"
+                    {
+                    "Name" = "8:2020"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_884F15CCF8FB4DF29E77D76665DE0005"
+                        "Folders"
+                        {
+                        }
+                    }
                     "{9EF0B969-E518-4E46-987F-47570745A589}:_3C18DB673B8644AC9C8DBDD13E706453"
                     {
                     "Name" = "8:2022"
@@ -360,11 +684,33 @@
                         {
                         }
                     }
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_8EA8241DF5444BEC8286ACD8C6AAF079"
+                    {
+                    "Name" = "8:2024"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_DEA8ABBE6E7D40099417392F229CF722"
+                        "Folders"
+                        {
+                        }
+                    }
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_F21E1AE2FD1144B68ABF31EA8D72CC6A"
+                    {
+                    "Name" = "8:2021"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_FAF90893397948D19A09FDBCE052E721"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_8F9289FA54B1413C8C4CF1ABCA5D2ECF"
             {
-            "DefaultLocation" = "8:[ProgramFilesFolder][Manufacturer]\\[ProductName]"
+            "DefaultLocation" = "8:[ProgramFilesFolder]Topazio\\RevitPlugin"
             "Name" = "8:#1925"
             "AlwaysCreate" = "11:FALSE"
             "Condition" = "8:"
@@ -372,6 +718,50 @@
             "Property" = "8:TARGETDIR"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_056F8C7043CB409685A1A13908DD4817"
+                    {
+                    "Name" = "8:2020"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_853D28E535564932889C660014617DB5"
+                        "Folders"
+                        {
+                        }
+                    }
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_19A443C6CA47464990F3514DF2D3F2F1"
+                    {
+                    "Name" = "8:2024"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_0691B63B17B746E7A554AC37FB12BB37"
+                        "Folders"
+                        {
+                        }
+                    }
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_4BECB0F233DA413AB484E227E8C150EC"
+                    {
+                    "Name" = "8:Icons"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_79B8CBD092D24F488B8A6852187C7F1E"
+                        "Folders"
+                        {
+                        }
+                    }
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_57EBE2FC0EBD41D2912065629F66F8EF"
+                    {
+                    "Name" = "8:2021"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_C0042CBDEB824828901D19196AD25C50"
+                        "Folders"
+                        {
+                        }
+                    }
                     "{9EF0B969-E518-4E46-987F-47570745A589}:_6555D7481A7E4D24B28ACC281E322B73"
                     {
                     "Name" = "8:2022"
@@ -381,17 +771,17 @@
                     "Property" = "8:_3122AAE31FD34973810EDB61C59C47AE"
                         "Folders"
                         {
-                            "{9EF0B969-E518-4E46-987F-47570745A589}:_CFB72A1785814146B294896AE8863018"
-                            {
-                            "Name" = "8:Icons"
-                            "AlwaysCreate" = "11:FALSE"
-                            "Condition" = "8:"
-                            "Transitive" = "11:FALSE"
-                            "Property" = "8:_79B8CBD092D24F488B8A6852187C7F1E"
-                                "Folders"
-                                {
-                                }
-                            }
+                        }
+                    }
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_A466F8953B9C4272A26F3B24F8633940"
+                    {
+                    "Name" = "8:2023"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_199B1394A13541AC9F7B066391E04CE9"
+                        "Folders"
+                        {
                         }
                     }
                 }
@@ -411,16 +801,16 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:RevitPlugin"
-        "ProductCode" = "8:{0AB30902-4133-4845-B060-BA8F18B9F2D8}"
-        "PackageCode" = "8:{0A0117E6-094F-4A3A-B3D4-EB0C7989411B}"
-        "UpgradeCode" = "8:{DF289255-713B-4EF9-98F2-289A2A61DA67}"
+        "ProductName" = "8:Topazio Revit Plugin"
+        "ProductCode" = "8:{45C48800-1323-44ED-AE21-130C0030E03C}"
+        "PackageCode" = "8:{BB8AC3DE-64A4-4E6E-9E28-451158E930AA}"
+        "UpgradeCode" = "8:{76011E8F-A315-444F-9091-1A7499357DB0}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.1"
+        "ProductVersion" = "8:1.0.0"
         "Manufacturer" = "8:Topazio"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -430,7 +820,7 @@
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"
-        "ARPPRODUCTICON" = "8:"
+        "ARPPRODUCTICON" = "8:_0825FE745F9642C6B88E5F99FA1EA8CF"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
@@ -543,7 +933,7 @@
             "Attributes" = "3:2"
                 "Dialogs"
                 {
-                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_1AE228C3DA9348ED94268F7D3D1D8731"
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_C319E35E6755427DA85302C711B64E8D"
                     {
                     "Sequence" = "3:100"
                     "DisplayName" = "8:Progress"
@@ -587,29 +977,7 @@
             "Attributes" = "3:1"
                 "Dialogs"
                 {
-                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_05EF890C982542FFA9FC41F1D4186E9D"
-                    {
-                    "Sequence" = "3:200"
-                    "DisplayName" = "8:Installation Folder"
-                    "UseDynamicProperties" = "11:TRUE"
-                    "IsDependency" = "11:FALSE"
-                    "SourcePath" = "8:<VsdDialogDir>\\VsdAdminFolderDlg.wid"
-                        "Properties"
-                        {
-                            "BannerBitmap"
-                            {
-                            "Name" = "8:BannerBitmap"
-                            "DisplayName" = "8:#1001"
-                            "Description" = "8:#1101"
-                            "Type" = "3:8"
-                            "ContextData" = "8:Bitmap"
-                            "Attributes" = "3:4"
-                            "Setting" = "3:1"
-                            "UsePlugInResources" = "11:TRUE"
-                            }
-                        }
-                    }
-                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_B06346C7ABC642248F5A721FEBED2CAD"
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_1FD00B4103664076A718690905BF5D87"
                     {
                     "Sequence" = "3:100"
                     "DisplayName" = "8:Welcome"
@@ -657,13 +1025,35 @@
                             }
                         }
                     }
-                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_F49F89F1FC8A472697D4EB49C91886E8"
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_566D452048614DBE8D3E509111E2DB29"
                     {
                     "Sequence" = "3:300"
                     "DisplayName" = "8:Confirm Installation"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdAdminConfirmDlg.wid"
+                        "Properties"
+                        {
+                            "BannerBitmap"
+                            {
+                            "Name" = "8:BannerBitmap"
+                            "DisplayName" = "8:#1001"
+                            "Description" = "8:#1101"
+                            "Type" = "3:8"
+                            "ContextData" = "8:Bitmap"
+                            "Attributes" = "3:4"
+                            "Setting" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                        }
+                    }
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_ACF0DC1E9AE94684A68D52682BDE2F84"
+                    {
+                    "Sequence" = "3:200"
+                    "DisplayName" = "8:Installation Folder"
+                    "UseDynamicProperties" = "11:TRUE"
+                    "IsDependency" = "11:FALSE"
+                    "SourcePath" = "8:<VsdDialogDir>\\VsdAdminFolderDlg.wid"
                         "Properties"
                         {
                             "BannerBitmap"
@@ -688,7 +1078,7 @@
             "Attributes" = "3:3"
                 "Dialogs"
                 {
-                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_3ED157FC62514F1FBBDDAA80B021DB3B"
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_968D7A93387D41CA8A5E779C520AB62A"
                     {
                     "Sequence" = "3:100"
                     "DisplayName" = "8:Finished"
@@ -738,7 +1128,7 @@
             "Attributes" = "3:2"
                 "Dialogs"
                 {
-                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_8C1225A931B84F4CA9F404EE4B31A41A"
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_6E479E1DE436433D87730969553A1257"
                     {
                     "Sequence" = "3:100"
                     "DisplayName" = "8:Progress"
@@ -782,9 +1172,9 @@
             "Attributes" = "3:1"
                 "Dialogs"
                 {
-                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_31ACF4DDC53946BF89AE9385E75E28BA"
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_1C08C6707C694CA495FCF6949F1A4CCE"
                     {
-                    "Sequence" = "3:100"
+                    "Sequence" = "3:110"
                     "DisplayName" = "8:Welcome"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
@@ -830,9 +1220,9 @@
                             }
                         }
                     }
-                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_54A7BA403A55485EA1AE00F43C683503"
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_30FB674CF81048BBAF23172409E7BF7F"
                     {
-                    "Sequence" = "3:300"
+                    "Sequence" = "3:130"
                     "DisplayName" = "8:Confirm Installation"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
@@ -852,9 +1242,9 @@
                             }
                         }
                     }
-                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_D5921DB0297148119FB6F54B589B29ED"
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_5B318CB90A62452FA7D17CFEC54CB5FE"
                     {
-                    "Sequence" = "3:200"
+                    "Sequence" = "3:120"
                     "DisplayName" = "8:Installation Folder"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
@@ -896,7 +1286,7 @@
             "Attributes" = "3:3"
                 "Dialogs"
                 {
-                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_B002FA7FAEA6410EADE4938F200E80C1"
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_D61FEBA610D14080B0517B7B8511380F"
                     {
                     "Sequence" = "3:100"
                     "DisplayName" = "8:Finished"

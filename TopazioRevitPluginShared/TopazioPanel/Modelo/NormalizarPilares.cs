@@ -22,52 +22,7 @@ namespace TopazioRevitPluginShared
             var pilaresDicts = new List<Dictionary<string, dynamic>>();
             var pilaresTipo = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_StructuralColumns).WhereElementIsElementType();
 
-            var deletarTipos = new List<dynamic>();
-            foreach (var pilar in pilaresTipo)
-            {
-                //TaskDialog.Show("DEBUG", pilar.Name);
-                if (pilar.Name.Contains("TQS") == false)
-                {
-                    continue;
-                }
-
-                //SALVA FAMILY TIPES NÃO UTILIZADOS PARA DELETAR
-                
-                var filtro = new FamilyInstanceFilter(doc, pilar.Id);
-                var instanciasPilares = new FilteredElementCollector(doc).WherePasses(filtro).ToElements();
-                if (instanciasPilares.Count() == 0)
-                {
-                    deletarTipos.Add(pilar);
-                    continue;
-                }
-
-                var sketchPilar = Utils.GetBottonFaceCurveLoop(doc, pilar.Id);
-                var aux = new Dictionary<string, dynamic> 
-                {
-                    {"ID", pilar.Id },
-                    {"Sketch", sketchPilar },
-                    {"Variations", new List<dynamic>() }
-                };
-                pilaresDicts.Add(aux);
-            }
-            Transaction trans = new Transaction(doc);
-            trans.Start("Deletar pilares tipo não utilizados");
-            foreach (var pilarTipo in deletarTipos)
-            {
-                var family = pilarTipo.Family;
-                var familyTypes = family.GetFamilySymbolIds();
-                if (familyTypes.Count == 1)
-                {
-                    doc.Delete(family.Id);
-                }
-                else
-                {
-                    doc.Delete(pilarTipo.Id);
-                }
-                
-            }
-            trans.Commit();
-
+ 
             var uniquePilares = new List<Dictionary<string, dynamic>>();
             foreach (var pilar in pilaresDicts)
             {
@@ -97,6 +52,7 @@ namespace TopazioRevitPluginShared
 
             }
 
+            Transaction trans = new Transaction(doc);
             trans.Start("Normalizar Pilares");
             foreach (var uniquePilarTipo in uniquePilares)
             {
@@ -115,6 +71,55 @@ namespace TopazioRevitPluginShared
                     }
                 }
             }
+
+            #region DELETAR TIPOS DE PILARES NÃO UTILIZADOS
+            var deletarTipos = new List<dynamic>();
+            foreach (var pilar in pilaresTipo)
+            {
+                //TaskDialog.Show("DEBUG", pilar.Name);
+                if (pilar.Name.Contains("TQS") == false)
+                {
+                    continue;
+                }
+
+                //SALVA FAMILY TIPES NÃO UTILIZADOS PARA DELETAR
+
+                var filtro = new FamilyInstanceFilter(doc, pilar.Id);
+                var instanciasPilares = new FilteredElementCollector(doc).WherePasses(filtro).ToElements();
+                if (instanciasPilares.Count() == 0)
+                {
+                    deletarTipos.Add(pilar);
+                    continue;
+                }
+
+                var sketchPilar = Utils.GetBottonFaceCurveLoop(doc, pilar.Id);
+                var aux = new Dictionary<string, dynamic>
+                {
+                    {"ID", pilar.Id },
+                    {"Sketch", sketchPilar },
+                    {"Variations", new List<dynamic>() }
+                };
+                pilaresDicts.Add(aux);
+            }
+            
+            trans.Start("Deletar pilares tipo não utilizados");
+            foreach (var pilarTipo in deletarTipos)
+            {
+                var family = pilarTipo.Family;
+                var familyTypes = family.GetFamilySymbolIds();
+                if (familyTypes.Count == 1)
+                {
+                    doc.Delete(family.Id);
+                }
+                else
+                {
+                    doc.Delete(pilarTipo.Id);
+                }
+
+            }
+            trans.Commit();
+            #endregion
+
             trans.Commit();
 
             //TaskDialog.Show("DEBUG", uniquePilares.Count.ToString());
