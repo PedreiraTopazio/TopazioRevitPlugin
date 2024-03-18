@@ -31,6 +31,8 @@ namespace TopazioRevitPluginShared
             topazioPanels.Add("Visualização");
             topazioPanels.Add("Documentação");
             topazioPanels.Add("Modelo");
+            //topazioPanels.Add("Debug");
+
 
             foreach (string panel in topazioPanels)
             {
@@ -144,6 +146,19 @@ namespace TopazioRevitPluginShared
                 NormalizarPilaresButton.LargeImage = largeImage;
 
             }
+            //RibbonPanel debug_Modelo = RibbonPanel(application, "Topazio", "Debug");
+            //if (debug_Modelo.AddItem(new PushButtonData("Test", "Test", thisAssemblyPath, "TopazioRevitPluginShared.TestButton")) is PushButton TestButton)
+            //{
+            //    TestButton.ToolTip = "Esse comando testa comandos em desenvolvimento";
+            //    // Reflection of path to image 
+            //    var globePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "../Icons/TopazioIcon.png"); //Mudar path depois para poder pegar outras imagens
+            //    Uri uriImage = new Uri(globePath);
+            //    // Apply image to bitmap
+            //    BitmapImage largeImage = new BitmapImage(uriImage);
+            //    // Apply image to button 
+            //    TestButton.LargeImage = largeImage;
+
+            //}
 
             return Result.Succeeded;
         }

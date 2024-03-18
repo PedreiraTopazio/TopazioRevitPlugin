@@ -77,5 +77,7 @@
       <SourcePngs Include="..\Icons\*.png" />
     </ItemGroup>
     <Copy SourceFiles="@(SourcePngs)" DestinationFolder="$(TargetDir)\Icons" />
+    <Copy SourceFiles="@(SourcePngs)" DestinationFolder="C:\Topazio\RevitPlugin\Icons" />
+    <Copy SourceFiles="@(SourceDlls)" DestinationFolder="C:\Topazio\RevitPlugin\2022" />
   </Target>
 </Project>
