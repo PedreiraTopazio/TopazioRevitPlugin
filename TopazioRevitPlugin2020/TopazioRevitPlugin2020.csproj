@@ -58,4 +58,23 @@
   </ItemGroup>
   <Import Project="..\TopazioRevitPluginShared\TopazioRevitPluginShared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+	<Target Name="AfterBuild">
+		<!--Copy the build to the correct folder-->
+		<GetReferenceAssemblyPaths TargetFrameworkMoniker=".NETFramework, Version=v2.0">
+			<Output TaskParameter="FullFrameworkReferenceAssemblyPaths" PropertyName="FrameworkAssembliesPath" />
+		</GetReferenceAssemblyPaths>
+		<GetAssemblyIdentity AssemblyFiles="$(OutDir)$(TargetName).dll">
+			<Output TaskParameter="Assemblies" ItemName="AssemblyInfo" />
+		</GetAssemblyIdentity>
+		<ItemGroup>
+			<SourceDlls Include="$(TargetDir)*.dll" />
+			<SourcePdbs Include="$(TargetDir)*.pdb" />
+			<SourcePdbs Include="$(TargetDir)*.pdb" />
+			<SourceXmls Include="$(TargetDir)*.xml" />
+			<SourcePngs Include="..\Icons\*.png" />
+		</ItemGroup>
+		<Copy SourceFiles="@(SourcePngs)" DestinationFolder="$(TargetDir)\Icons" />
+		<Copy SourceFiles="@(SourcePngs)" DestinationFolder="C:\Topazio\RevitPlugin\Icons" />
+		<Copy SourceFiles="@(SourceDlls)" DestinationFolder="C:\Topazio\RevitPlugin\2020" />
+	</Target>
 </Project>

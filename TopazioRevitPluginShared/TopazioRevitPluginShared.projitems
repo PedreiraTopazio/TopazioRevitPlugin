@@ -9,6 +9,7 @@
     <Import_RootNamespace>TopazioRevitPluginShared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)TopazioPanel\DEBUG\TestButton.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TopazioPanel\Documentação\AutoDimension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TopazioPanel\Documentação\StructuralColumnHatches.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TopazioPanel\Modelo\NormalizarPilares.cs" />
