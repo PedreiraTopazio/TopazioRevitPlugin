@@ -51,7 +51,7 @@ namespace TopazioRevitPluginShared
                 FieldBuilder fieldBuilder = storeCreator.AddSimpleField("Creator", typeof(string));
                 schema = storeCreator.Finish();  //RETORNA O SCHEMA CRIADO
             }
-            
+
 
 
             Entity entity = new Entity(schema);
@@ -61,23 +61,23 @@ namespace TopazioRevitPluginShared
             Transaction trans = new Transaction(doc);
             trans.Start("Excluir Hachuras");
             var hatches = new FilteredElementCollector(doc, doc.ActiveView.Id).OfClass(typeof(FilledRegion)).WhereElementIsNotElementType().ToElements();
-            //TaskDialog.Show("Debug", hatches.Count.ToString());
             foreach (var hatch in hatches)
             {
                 try
                 {
                     var creatorValue = hatch.GetEntity(schema).Get<string>(schema.GetField("Creator"));
-                    if (creatorValue == "PilarNMC - TopazioRevitPlugin") 
+                    if (creatorValue == "PilarNMC - TopazioRevitPlugin")
                     {
                         doc.Delete(hatch.Id);
                     }
-                }catch (Exception) { }
+                }
+                catch (Exception) { }
             }
             trans.Commit();
-           
+
 
             try
-            {   
+            {
                 //Pega o nivel da vista
                 var nivelId = Utils.GetLevelOfView(doc, view);
 
@@ -93,20 +93,12 @@ namespace TopazioRevitPluginShared
                 List<Element> pilaresVisiveis = (List<Element>)new FilteredElementCollector(doc, view.Id).OfCategory(BuiltInCategory.OST_StructuralColumns).WhereElementIsNotElementType().ToElements();
                 var pilaresDict = new List<Dictionary<string, dynamic>>();
 
-                
 
+                var pilaresInclinadosId = "";
                 //Classificar os pilares em terminam e começam
                 foreach (var pilar in pilaresVisiveis)
                 {
 
-
-                    var location = pilar.Location;
-                    var point = location as LocationPoint;
-
-                    var pilarId = pilar.Id;
-                    var pilarTipo = pilar.GetTypeId();
-                    var pilarXY = pilar.get_Parameter(BuiltInParameter.COLUMN_LOCATION_MARK).AsString();
-                    var rotacao = point.Rotation;
                     string NM = "";
 
                     try
@@ -124,6 +116,24 @@ namespace TopazioRevitPluginShared
                     {
                         continue;
                     }
+
+                    //Não vai rodar se o pilar for inclinado
+                    if (pilar.get_Parameter(BuiltInParameter.SLANTED_COLUMN_TYPE_PARAM).AsValueString() != "Vertical")
+                    {
+                        pilaresInclinadosId += Environment.NewLine + pilar.Id.ToString();
+                        continue;
+                    }
+
+                    var location = pilar.Location;
+                    var point = location as LocationPoint;
+
+                    var pilarId = pilar.Id;
+                    var pilarTipo = pilar.GetTypeId();
+                    var pilarXY = pilar.get_Parameter(BuiltInParameter.COLUMN_LOCATION_MARK).AsString();
+                    var rotacao = point.Rotation;
+
+
+
 
                     foreach (Dictionary<string, dynamic> dict in pilaresDict)
                     {
@@ -194,24 +204,29 @@ namespace TopazioRevitPluginShared
                             //AQUI EU VOU DEFINIR O Extensible Storage NOS HATCHS
                             entity.Set<string>(fieldStoreCreator, "PilarNMC - TopazioRevitPlugin");
                             doc.GetElement(hatchId).SetEntity(entity);
-                            
-                        }catch (Exception ex) { }
-                        
+
+                        }
+                        catch (Exception ex)
+                        {
+
+                        }
+
                     }
-                    
+
 
 
                 }
                 trans.Commit();
+                TaskDialog.Show("Revit", "Verificar os pilares inclinados manualmente, ids: " + pilaresInclinadosId);
                 return Result.Succeeded;
-                
+
             }
             catch (Exception exception)
             {
                 TaskDialog.Show("REVIT", exception.Message + " " + exception.Source + " " + exception.InnerException);
                 return Result.Failed;
             };
-            
+
         }
     }
 }
