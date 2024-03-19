@@ -217,7 +217,11 @@ namespace TopazioRevitPluginShared
 
                 }
                 trans.Commit();
-                TaskDialog.Show("Revit", "Verificar os pilares inclinados manualmente, ids: " + pilaresInclinadosId);
+                if (pilaresInclinadosId != "") 
+                {
+                    TaskDialog.Show("Revit", "Verificar os pilares inclinados manualmente, ids: " + pilaresInclinadosId);
+                }
+                
                 return Result.Succeeded;
 
             }
