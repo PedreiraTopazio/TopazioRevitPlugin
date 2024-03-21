@@ -170,6 +170,7 @@ namespace TopazioRevitPluginShared
                     .Id;
 
                 trans.Start("Pilar NMC");
+                var pilaresNascemErrorId = "";
                 foreach (Dictionary<string, dynamic> dict in pilaresDict)
                 {
                     string NM = dict["NM"];
@@ -193,6 +194,7 @@ namespace TopazioRevitPluginShared
                         doc.ActiveView.SetElementOverrides(ID, CurrentOverride);
                     }
                     //Pilares que nasce -> Cria grafico 2D em planta para esses pilares
+                    
                     if (NM == "Nasce")
                     {
                         pilar = doc.GetElement(ID);
@@ -208,7 +210,7 @@ namespace TopazioRevitPluginShared
                         }
                         catch (Exception ex)
                         {
-
+                            pilaresNascemErrorId += Environment.NewLine + pilar.Id.ToString();
                         }
 
                     }
@@ -217,9 +219,14 @@ namespace TopazioRevitPluginShared
 
                 }
                 trans.Commit();
+                if (pilaresNascemErrorId != "")
+                {
+                    TaskDialog.Show("Erro", "Verificar os pilares que nascem, ids: " + pilaresNascemErrorId);
+                }
+                
                 if (pilaresInclinadosId != "") 
                 {
-                    TaskDialog.Show("Revit", "Verificar os pilares inclinados manualmente, ids: " + pilaresInclinadosId);
+                    TaskDialog.Show("Erro", "Verificar os pilares inclinados manualmente, ids: " + pilaresInclinadosId);
                 }
                 
                 return Result.Succeeded;
