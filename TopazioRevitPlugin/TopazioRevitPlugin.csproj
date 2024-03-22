@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9652E74D-BDFE-45DF-910F-8E5FA85F3E49}</ProjectGuid>
+    <ProjectGuid>{64911CB4-12AB-413F-89CD-7F6B8A20C503}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TopazioRevitPlugin</RootNamespace>
@@ -31,6 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="RevitAPI">
       <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\Revit 2022\RevitAPI.dll</HintPath>
       <Private>False</Private>
@@ -41,6 +43,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
@@ -52,15 +55,49 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TopazioPanel\Documentação\ConfigModelForm.cs" />
+    <Compile Include="TopazioPanel\Documentação\ConfigLevelForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TopazioPanel\Documentação\ConfigLevelForm.Designer.cs">
+      <DependentUpon>ConfigLevelForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TopazioPanel\Documentação\ConfigModelForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="TopazioPanel\Documentação\ConfigModelForm.Designer.cs">
       <DependentUpon>ConfigModelForm.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="TopazioPlugin.addin" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TopazioPanel\Documentação\ConfigLevelForm.resx">
+      <DependentUpon>ConfigLevelForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TopazioPanel\Documentação\ConfigModelForm.resx">
       <DependentUpon>ConfigModelForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <Import Project="..\TopazioRevitPluginShared\TopazioRevitPluginShared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="AfterBuild">
+    <!--Copy the build to the correct folder-->
+    <GetReferenceAssemblyPaths TargetFrameworkMoniker=".NETFramework, Version=v2.0">
+      <Output TaskParameter="FullFrameworkReferenceAssemblyPaths" PropertyName="FrameworkAssembliesPath" />
+    </GetReferenceAssemblyPaths>
+    <GetAssemblyIdentity AssemblyFiles="$(OutDir)$(TargetName).dll">
+      <Output TaskParameter="Assemblies" ItemName="AssemblyInfo" />
+    </GetAssemblyIdentity>
+    <ItemGroup>
+      <SourceDlls Include="$(TargetDir)*.dll" />
+      <SourcePdbs Include="$(TargetDir)*.pdb" />
+      <SourcePdbs Include="$(TargetDir)*.pdb" />
+      <SourceXmls Include="$(TargetDir)*.xml" />
+      <SourcePngs Include="..\Icons\*.png" />
+    </ItemGroup>
+    <Copy SourceFiles="@(SourcePngs)" DestinationFolder="$(TargetDir)\Icons" />
+    <Copy SourceFiles="@(SourcePngs)" DestinationFolder="C:\Topazio\RevitPlugin\Icons" />
+    <Copy SourceFiles="@(SourceDlls)" DestinationFolder="C:\Topazio\RevitPlugin\2022" />
+  </Target>
 </Project>

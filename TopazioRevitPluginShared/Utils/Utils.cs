@@ -3,7 +3,9 @@ using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
+using System.Windows.Controls;
 
 namespace TopazioRevitPluginShared
 {
@@ -176,6 +178,12 @@ namespace TopazioRevitPluginShared
             // All curve loops and curves are equal
             //TaskDialog.Show("DEBUG", "SÃO IGUAIS");
             return true;
+        }
+
+        public static double ConvertFromInternalUnits(Document doc, double internalValue)
+        {
+            var unit = doc.GetUnits().GetFormatOptions(SpecTypeId.Length).GetUnitTypeId();
+            return UnitUtils.ConvertFromInternalUnits(internalValue, unit);
         }
     }
 }
