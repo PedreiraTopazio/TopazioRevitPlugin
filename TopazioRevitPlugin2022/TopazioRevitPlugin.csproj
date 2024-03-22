@@ -55,15 +55,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TopazioPanel\Documentação\ConfigModelForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TopazioPanel\Documentação\ConfigModelForm.Designer.cs">
+      <DependentUpon>ConfigModelForm.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="TopazioPlugin.addin" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TopazioRevitPlugin\TopazioRevitPlugin.csproj">
-      <Project>{9652e74d-bdfe-45df-910f-8e5fa85f3e49}</Project>
-      <Name>TopazioRevitPlugin</Name>
-    </ProjectReference>
+    <EmbeddedResource Include="TopazioPanel\Documentação\ConfigModelForm.resx">
+      <DependentUpon>ConfigModelForm.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="..\TopazioRevitPluginShared\TopazioRevitPluginShared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

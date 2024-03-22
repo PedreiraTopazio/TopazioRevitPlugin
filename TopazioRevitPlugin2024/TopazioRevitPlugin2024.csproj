@@ -57,12 +57,6 @@
   <ItemGroup>
     <None Include="TopazioPlugin.addin" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\TopazioRevitPlugin\TopazioRevitPlugin.csproj">
-      <Project>{9652e74d-bdfe-45df-910f-8e5fa85f3e49}</Project>
-      <Name>TopazioRevitPlugin</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="..\TopazioRevitPluginShared\TopazioRevitPluginShared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild">

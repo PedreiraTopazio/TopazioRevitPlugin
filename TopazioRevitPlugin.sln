@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34408.163
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopazioRevitPlugin2022", "TopazioRevitPlugin2022\TopazioRevitPlugin2022.csproj", "{64911CB4-12AB-413F-89CD-7F6B8A20C503}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopazioRevitPlugin", "TopazioRevitPlugin2022\TopazioRevitPlugin.csproj", "{64911CB4-12AB-413F-89CD-7F6B8A20C503}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "TopazioRevitPluginShared", "TopazioRevitPluginShared\TopazioRevitPluginShared.shproj", "{5C34D65D-FC54-44D6-B6E4-B2C2A04A23BA}"
 EndProject
@@ -19,16 +19,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Icons", "Icons", "{81F99D9F
 	EndProjectSection
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "TopazioRevitPluginInstaller", "TopazioRevitPluginInstaller\TopazioRevitPluginInstaller.vdproj", "{85F7DD98-4B22-48BF-9D31-FA12507198EB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopazioRevitPlugin2023", "TopazioRevitPlugin2023\TopazioRevitPlugin2023.csproj", "{FE013690-CBA3-4E8A-837F-4313A67E8419}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopazioRevitPlugin2024", "TopazioRevitPlugin2024\TopazioRevitPlugin2024.csproj", "{5E989CAB-3750-47BB-A296-0B6255271B31}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopazioRevitPlugin2021", "TopazioRevitPlugin2021\TopazioRevitPlugin2021.csproj", "{D4794B48-FB3E-439B-829B-510581398160}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopazioRevitPlugin2020", "TopazioRevitPlugin2020\TopazioRevitPlugin2020.csproj", "{0AA27510-673A-449E-B5D6-F0BB0E337F96}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopazioRevitPlugin", "TopazioRevitPlugin\TopazioRevitPlugin.csproj", "{9652E74D-BDFE-45DF-910F-8E5FA85F3E49}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,36 +36,6 @@ Global
 		{85F7DD98-4B22-48BF-9D31-FA12507198EB}.Debug 2022|Any CPU.Build.0 = Debug
 		{85F7DD98-4B22-48BF-9D31-FA12507198EB}.Debug|Any CPU.ActiveCfg = Debug
 		{85F7DD98-4B22-48BF-9D31-FA12507198EB}.Release|Any CPU.ActiveCfg = Release
-		{FE013690-CBA3-4E8A-837F-4313A67E8419}.Debug 2022|Any CPU.ActiveCfg = Debug|Any CPU
-		{FE013690-CBA3-4E8A-837F-4313A67E8419}.Debug 2022|Any CPU.Build.0 = Debug|Any CPU
-		{FE013690-CBA3-4E8A-837F-4313A67E8419}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FE013690-CBA3-4E8A-837F-4313A67E8419}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FE013690-CBA3-4E8A-837F-4313A67E8419}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FE013690-CBA3-4E8A-837F-4313A67E8419}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5E989CAB-3750-47BB-A296-0B6255271B31}.Debug 2022|Any CPU.ActiveCfg = Debug|Any CPU
-		{5E989CAB-3750-47BB-A296-0B6255271B31}.Debug 2022|Any CPU.Build.0 = Debug|Any CPU
-		{5E989CAB-3750-47BB-A296-0B6255271B31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5E989CAB-3750-47BB-A296-0B6255271B31}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5E989CAB-3750-47BB-A296-0B6255271B31}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5E989CAB-3750-47BB-A296-0B6255271B31}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D4794B48-FB3E-439B-829B-510581398160}.Debug 2022|Any CPU.ActiveCfg = Debug|Any CPU
-		{D4794B48-FB3E-439B-829B-510581398160}.Debug 2022|Any CPU.Build.0 = Debug|Any CPU
-		{D4794B48-FB3E-439B-829B-510581398160}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D4794B48-FB3E-439B-829B-510581398160}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D4794B48-FB3E-439B-829B-510581398160}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D4794B48-FB3E-439B-829B-510581398160}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0AA27510-673A-449E-B5D6-F0BB0E337F96}.Debug 2022|Any CPU.ActiveCfg = Debug|Any CPU
-		{0AA27510-673A-449E-B5D6-F0BB0E337F96}.Debug 2022|Any CPU.Build.0 = Debug|Any CPU
-		{0AA27510-673A-449E-B5D6-F0BB0E337F96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0AA27510-673A-449E-B5D6-F0BB0E337F96}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0AA27510-673A-449E-B5D6-F0BB0E337F96}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0AA27510-673A-449E-B5D6-F0BB0E337F96}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9652E74D-BDFE-45DF-910F-8E5FA85F3E49}.Debug 2022|Any CPU.ActiveCfg = Debug|Any CPU
-		{9652E74D-BDFE-45DF-910F-8E5FA85F3E49}.Debug 2022|Any CPU.Build.0 = Debug|Any CPU
-		{9652E74D-BDFE-45DF-910F-8E5FA85F3E49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9652E74D-BDFE-45DF-910F-8E5FA85F3E49}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9652E74D-BDFE-45DF-910F-8E5FA85F3E49}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9652E74D-BDFE-45DF-910F-8E5FA85F3E49}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,11 +44,7 @@ Global
 		SolutionGuid = {A5F9722F-0A00-466B-A555-32543418CC43}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		TopazioRevitPluginShared\TopazioRevitPluginShared.projitems*{0aa27510-673a-449e-b5d6-f0bb0e337f96}*SharedItemsImports = 4
 		TopazioRevitPluginShared\TopazioRevitPluginShared.projitems*{5c34d65d-fc54-44d6-b6e4-b2c2a04a23ba}*SharedItemsImports = 13
-		TopazioRevitPluginShared\TopazioRevitPluginShared.projitems*{5e989cab-3750-47bb-a296-0b6255271b31}*SharedItemsImports = 4
 		TopazioRevitPluginShared\TopazioRevitPluginShared.projitems*{64911cb4-12ab-413f-89cd-7f6b8a20c503}*SharedItemsImports = 4
-		TopazioRevitPluginShared\TopazioRevitPluginShared.projitems*{d4794b48-fb3e-439b-829b-510581398160}*SharedItemsImports = 4
-		TopazioRevitPluginShared\TopazioRevitPluginShared.projitems*{fe013690-cba3-4e8a-837f-4313a67e8419}*SharedItemsImports = 4
 	EndGlobalSection
 EndGlobal

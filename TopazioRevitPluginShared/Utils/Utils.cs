@@ -177,6 +177,5 @@ namespace TopazioRevitPluginShared
             //TaskDialog.Show("DEBUG", "SÃO IGUAIS");
             return true;
         }
-
     }
 }
