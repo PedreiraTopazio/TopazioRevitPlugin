@@ -4,6 +4,7 @@ using Autodesk.Revit.DB.ExtensibleStorage;
 using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TopazioRevitPlugin.TopazioPanel.Documentação;
 
 namespace TopazioRevitPluginShared
@@ -16,9 +17,193 @@ namespace TopazioRevitPluginShared
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
+            //Get application and document objects
+            UIApplication uiapp = commandData.Application;
+            UIDocument uidoc = uiapp.ActiveUIDocument;
+            Document doc = uidoc.Document;
+
+            View activeView = doc.ActiveView;
+            #region TESTA SE ESTAMOS EM UMA VISTA 2D
+            View3D view3D = activeView as View3D;
+            if (null != view3D)
+            {
+                message += "Criar hachuras somente em vista 2D";
+                return Result.Failed;
+            }
+            ViewSheet viewSheet = activeView as ViewSheet;
+            if (null != viewSheet)
+            {
+                message += "Criar hachuras somente em vista 2D";
+                return Autodesk.Revit.UI.Result.Failed;
+            }
+            #endregion  
+
+            var vigas = new FilteredElementCollector(doc, doc.ActiveView.Id).WherePasses(new ElementCategoryFilter(BuiltInCategory.OST_StructuralFraming)).ToElements();
+            var pisos = new FilteredElementCollector(doc, doc.ActiveView.Id).WherePasses(new ElementCategoryFilter(BuiltInCategory.OST_Floors)).ToElements();
+            var pilares = new FilteredElementCollector(doc, doc.ActiveView.Id).WherePasses(new ElementCategoryFilter(BuiltInCategory.OST_StructuralColumns)).ToElements();
+
+            ElementId levelId = Utils.GetLevelOfView(doc, doc.ActiveView);
+            Element levelElem = doc.GetElement(levelId);
+
+
+            //PROCURANDO O SCHEMA
+            Guid schemaGUID = new Guid("58ffa6af-2458-4da8-8a7c-7d8beb619a29");
+            Schema schema = Schema.Lookup(schemaGUID);
+
+            //SE NÃO TIVER ESQUEMA, retornar erro
+            if (schema == null)
+            {
+                TaskDialog.Show("Error", "Definir cores no modelo primeiro.");
+                return Result.Failed;
+            }
+
+            var dataStorage =
+            new FilteredElementCollector(doc)
+            .OfClass(typeof(DataStorage))
+            .FirstElement();
+
+            if (dataStorage == null)
+            {
+                TaskDialog.Show("Error", "Definir cores no modelo primeiro.");
+                return Result.Failed;
+            }
+
+            //GET EXISTING VALUES
+            Entity entity = dataStorage.GetEntity(schema);
+            Level level = doc.GetElement(levelId) as Level;
+            Entity Levelentity = level.GetEntity(schema);
+
+            Dictionary<double, Color> DictDesniveisColor = new Dictionary<double, Color>();
+
+            if (Levelentity.IsValid())
+            {
+                int index = 1;
+                while (index <= 20)
+                {
+                    if (Levelentity.Get<string>(schema.GetField("PED_HTCD" + index.ToString() + "_DESNIVEL_COLOR")) != "")
+                    {
+                        var desnivel = Math.Round(Convert.ToDouble(Levelentity.Get<string>(schema.GetField("PED_HTCD" + index.ToString() + "_DESNIVEL_COLOR"))), 2);
+                        var color = Utils.ColorFrom9String(entity.Get<string>(schema.GetField("PED_HTCD" + index.ToString() + "_DESNIVEL_COLOR")));
+
+                        DictDesniveisColor.Add(desnivel, color);
+                    }
+                    
+                    index++;
+                }
+            }
+
+
+
+            #region Aplicar sobreposição nos elementos
+            Transaction trans = new Transaction(doc);
+            trans.Start("Colorir Desniveis");
+            FillPatternElement solidFillPattern = new FilteredElementCollector(doc).OfClass(typeof(FillPatternElement)).Cast<FillPatternElement>().First(a => a.GetFillPattern().IsSolidFill);
+            foreach (var piso in pisos)
+                {
+                if (piso.LookupParameter("Titulo").AsString() != "")
+                {
+                    ElementId elementlevel = piso.LookupParameter("Nível").AsElementId();
+                    double desnivel = Math.Round(Utils.ConvertFromInternalUnits(doc, piso.LookupParameter("Altura do deslocamento do nível").AsDouble()), 2);
+                    if (elementlevel != levelId) 
+                    {
+                        var elementlevelElem = doc.GetElement(elementlevel);
+                        desnivel = Math.Round(Utils.ConvertFromInternalUnits(doc, elementlevelElem.LookupParameter("Elevação").AsDouble() - levelElem.LookupParameter("Elevação").AsDouble()), 2) + desnivel;
+                    }                        
+
+                    if (DictDesniveisColor.ContainsKey(desnivel)) 
+                    {
+                        OverrideGraphicSettings overrideGraphicSettings = activeView.GetElementOverrides(piso.Id);
+
+                        //Corte
+                        overrideGraphicSettings.SetCutForegroundPatternColor(DictDesniveisColor[desnivel]);
+                        overrideGraphicSettings.SetCutForegroundPatternId(solidFillPattern.Id);
+
+                        //Vista
+                        overrideGraphicSettings.SetSurfaceForegroundPatternColor(DictDesniveisColor[desnivel]);
+                        overrideGraphicSettings.SetSurfaceForegroundPatternId(solidFillPattern.Id);
+
+                        activeView.SetElementOverrides(piso.Id, overrideGraphicSettings);
+                    }
+                }
+            }
+            foreach (var viga in vigas)
+            {
+
+                if (viga.LookupParameter("Titulo").AsString() != "")
+                {
+                    //COLOCAR O MÉTODO PARA DESBLOQUEAR O NIVEL
+
+                    if (viga.LookupParameter("Deslocamento do nível inicial") == null || viga.LookupParameter("Deslocamento do nível final") == null)
+                    {
+                        continue;
+                    }
+
+                    var desnivelInicial = Math.Round(Utils.ConvertFromInternalUnits(doc, viga.LookupParameter("Deslocamento do nível inicial").AsDouble()), 2);
+                    var desnivelFinal = Math.Round(Utils.ConvertFromInternalUnits(doc, viga.LookupParameter("Deslocamento do nível final").AsDouble()), 2);
+                    var desnivel = desnivelInicial;
+                    if (desnivelInicial != desnivelFinal)
+                    {
+                        continue;
+                    }
+
+                    ElementId elementlevel = viga.LookupParameter("Nível de referência").AsElementId();
+                    if (elementlevel != levelId)
+                    {
+                        var elementlevelElem = doc.GetElement(elementlevel);
+                        desnivel = Math.Round(Utils.ConvertFromInternalUnits(doc, elementlevelElem.LookupParameter("Elevação").AsDouble() - levelElem.LookupParameter("Elevação").AsDouble()), 2) + desnivel;
+                    }
+
+                    if (DictDesniveisColor.ContainsKey(desnivel))
+                    {
+                        OverrideGraphicSettings overrideGraphicSettings = activeView.GetElementOverrides(viga.Id);
+
+                        //Corte
+                        overrideGraphicSettings.SetCutForegroundPatternColor(DictDesniveisColor[desnivel]);
+                        overrideGraphicSettings.SetCutForegroundPatternId(solidFillPattern.Id);
+
+                        //Vista
+                        overrideGraphicSettings.SetSurfaceForegroundPatternColor(DictDesniveisColor[desnivel]);
+                        overrideGraphicSettings.SetSurfaceForegroundPatternId(solidFillPattern.Id);
+
+                        activeView.SetElementOverrides(viga.Id, overrideGraphicSettings);
+                    }
+
+                }
+            }
+            foreach (var pilar in pilares)
+            {
+                if (pilar.LookupParameter("Titulo").AsString() == "") { continue; }
+                var desnivel = Math.Round(Utils.ConvertFromInternalUnits(doc, pilar.LookupParameter("Deslocamento superior").AsDouble()), 2);
+
+                ElementId elementlevel = pilar.LookupParameter("Nível superior").AsElementId();
+                if (elementlevel != levelId)
+                {
+                    continue;
+                }
+
+                if (DictDesniveisColor.ContainsKey(desnivel))
+                {
+                    OverrideGraphicSettings overrideGraphicSettings = activeView.GetElementOverrides(pilar.Id);
+
+                    //Corte
+                    overrideGraphicSettings.SetCutBackgroundPatternColor(DictDesniveisColor[desnivel]);
+                    overrideGraphicSettings.SetCutBackgroundPatternId(solidFillPattern.Id);
+
+                    //Vista
+                    overrideGraphicSettings.SetSurfaceBackgroundPatternColor(DictDesniveisColor[desnivel]);
+                    overrideGraphicSettings.SetSurfaceBackgroundPatternId(solidFillPattern.Id);
+
+                    activeView.SetElementOverrides(pilar.Id, overrideGraphicSettings);
+                }
+            }
+            trans.Commit();
+            #endregion
+
             return Result.Succeeded;
         }
     }
+
+    #region Botão Config Model
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class ConfigModelButton : IExternalCommand
@@ -205,7 +390,7 @@ namespace TopazioRevitPluginShared
             return Result.Succeeded;
         }
     }
-
+    #region Salvar Cores no Modelo
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     class AplicarCoresForm : IExternalEventHandler
@@ -275,9 +460,10 @@ namespace TopazioRevitPluginShared
             return "AplicarCoresForm";
         }
     }
+    #endregion
+    #endregion
 
-
-
+    #region Botão Config Level
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class ConfigLevelButton : IExternalCommand
@@ -307,13 +493,11 @@ namespace TopazioRevitPluginShared
 
             ElementId levelID = Utils.GetLevelOfView(doc, activeView);
 
-            //TaskDialog.Show("DEBUG", "Level ID: " + levelID.ToString());
-
             //PROCURANDO O SCHEMA
             Guid schemaGUID = new Guid("58ffa6af-2458-4da8-8a7c-7d8beb619a29");
             Schema schema = Schema.Lookup(schemaGUID);
 
-            //SE NÃO TIVER ESQUEMA, CRIAR ESQUEMA
+            //SE NÃO TIVER ESQUEMA, retornar erro
             if (schema == null)
             {
                 TaskDialog.Show("Error", "Definir cores no modelo primeiro.");
@@ -323,6 +507,124 @@ namespace TopazioRevitPluginShared
 
             ConfigLevelForm form = new ConfigLevelForm(this);
 
+            #region Aplicando cores do documento ao forms do nivel
+            var dataStorage =
+            new FilteredElementCollector(doc)
+            .OfClass(typeof(DataStorage))
+            .FirstElement();
+
+            if (dataStorage == null)
+            {
+                TaskDialog.Show("Error", "Definir cores no modelo primeiro.");
+                return Result.Failed;
+            }
+
+            //GET EXISTING VALUES
+            Entity entity = dataStorage.GetEntity(schema);
+            var color1Value = entity.Get<string>(schema.GetField("PED_HTCD1_DESNIVEL_COLOR"));
+            var color2Value = entity.Get<string>(schema.GetField("PED_HTCD2_DESNIVEL_COLOR"));
+            var color3Value = entity.Get<string>(schema.GetField("PED_HTCD3_DESNIVEL_COLOR"));
+            var color4Value = entity.Get<string>(schema.GetField("PED_HTCD4_DESNIVEL_COLOR"));
+            var color5Value = entity.Get<string>(schema.GetField("PED_HTCD5_DESNIVEL_COLOR"));
+            var color6Value = entity.Get<string>(schema.GetField("PED_HTCD6_DESNIVEL_COLOR"));
+            var color7Value = entity.Get<string>(schema.GetField("PED_HTCD7_DESNIVEL_COLOR"));
+            var color8Value = entity.Get<string>(schema.GetField("PED_HTCD8_DESNIVEL_COLOR"));
+            var color9Value = entity.Get<string>(schema.GetField("PED_HTCD9_DESNIVEL_COLOR"));
+            var color10Value = entity.Get<string>(schema.GetField("PED_HTCD10_DESNIVEL_COLOR"));
+            var color11Value = entity.Get<string>(schema.GetField("PED_HTCD11_DESNIVEL_COLOR"));
+            var color12Value = entity.Get<string>(schema.GetField("PED_HTCD12_DESNIVEL_COLOR"));
+            var color13Value = entity.Get<string>(schema.GetField("PED_HTCD13_DESNIVEL_COLOR"));
+            var color14Value = entity.Get<string>(schema.GetField("PED_HTCD14_DESNIVEL_COLOR"));
+            var color15Value = entity.Get<string>(schema.GetField("PED_HTCD15_DESNIVEL_COLOR"));
+            var color16Value = entity.Get<string>(schema.GetField("PED_HTCD16_DESNIVEL_COLOR"));
+            var color17Value = entity.Get<string>(schema.GetField("PED_HTCD17_DESNIVEL_COLOR"));
+            var color18Value = entity.Get<string>(schema.GetField("PED_HTCD18_DESNIVEL_COLOR"));
+            var color19Value = entity.Get<string>(schema.GetField("PED_HTCD19_DESNIVEL_COLOR"));
+            var color20Value = entity.Get<string>(schema.GetField("PED_HTCD20_DESNIVEL_COLOR"));
+
+            if (color1Value != "")
+            {
+                form.PED_HTCD1_DESNIVEL_COLOR.BackColor = System.Drawing.Color.FromArgb(Convert.ToInt32(color1Value.Substring(0, 3)), Convert.ToInt32(color1Value.Substring(3, 3)), Convert.ToInt32(color1Value.Substring(6, 3)));
+            }
+            if (color2Value != "")
+            {
+                form.PED_HTCD2_DESNIVEL_COLOR.BackColor = System.Drawing.Color.FromArgb(Convert.ToInt32(color2Value.Substring(0, 3)), Convert.ToInt32(color2Value.Substring(3, 3)), Convert.ToInt32(color2Value.Substring(6, 3)));
+            }
+            if (color3Value != "")
+            {
+                form.PED_HTCD3_DESNIVEL_COLOR.BackColor = System.Drawing.Color.FromArgb(Convert.ToInt32(color3Value.Substring(0, 3)), Convert.ToInt32(color3Value.Substring(3, 3)), Convert.ToInt32(color3Value.Substring(6, 3)));
+            }
+            if (color4Value != "")
+            {
+                form.PED_HTCD4_DESNIVEL_COLOR.BackColor = System.Drawing.Color.FromArgb(Convert.ToInt32(color4Value.Substring(0, 3)), Convert.ToInt32(color4Value.Substring(3, 3)), Convert.ToInt32(color4Value.Substring(6, 3)));
+            }
+            if (color5Value != "")
+            {
+                form.PED_HTCD5_DESNIVEL_COLOR.BackColor = System.Drawing.Color.FromArgb(Convert.ToInt32(color5Value.Substring(0, 3)), Convert.ToInt32(color5Value.Substring(3, 3)), Convert.ToInt32(color5Value.Substring(6, 3)));
+            }
+            if (color6Value != "")
+            {
+                form.PED_HTCD6_DESNIVEL_COLOR.BackColor = System.Drawing.Color.FromArgb(Convert.ToInt32(color6Value.Substring(0, 3)), Convert.ToInt32(color6Value.Substring(3, 3)), Convert.ToInt32(color6Value.Substring(6, 3)));
+            }
+            if (color7Value != "")
+            {
+                form.PED_HTCD7_DESNIVEL_COLOR.BackColor = System.Drawing.Color.FromArgb(Convert.ToInt32(color7Value.Substring(0, 3)), Convert.ToInt32(color7Value.Substring(3, 3)), Convert.ToInt32(color7Value.Substring(6, 3)));
+            }
+            if (color8Value != "")
+            {
+                form.PED_HTCD8_DESNIVEL_COLOR.BackColor = System.Drawing.Color.FromArgb(Convert.ToInt32(color8Value.Substring(0, 3)), Convert.ToInt32(color8Value.Substring(3, 3)), Convert.ToInt32(color8Value.Substring(6, 3)));
+            }
+            if (color9Value != "")
+            {
+                form.PED_HTCD9_DESNIVEL_COLOR.BackColor = System.Drawing.Color.FromArgb(Convert.ToInt32(color9Value.Substring(0, 3)), Convert.ToInt32(color9Value.Substring(3, 3)), Convert.ToInt32(color9Value.Substring(6, 3)));
+            }
+            if (color10Value != "")
+            {
+                form.PED_HTCD10_DESNIVEL_COLOR.BackColor = System.Drawing.Color.FromArgb(Convert.ToInt32(color10Value.Substring(0, 3)), Convert.ToInt32(color10Value.Substring(3, 3)), Convert.ToInt32(color10Value.Substring(6, 3)));
+            }
+            if (color11Value != "")
+            {
+                form.PED_HTCD11_DESNIVEL_COLOR.BackColor = System.Drawing.Color.FromArgb(Convert.ToInt32(color11Value.Substring(0, 3)), Convert.ToInt32(color11Value.Substring(3, 3)), Convert.ToInt32(color11Value.Substring(6, 3)));
+            }
+            if (color12Value != "")
+            {
+                form.PED_HTCD12_DESNIVEL_COLOR.BackColor = System.Drawing.Color.FromArgb(Convert.ToInt32(color12Value.Substring(0, 3)), Convert.ToInt32(color12Value.Substring(3, 3)), Convert.ToInt32(color12Value.Substring(6, 3)));
+            }
+            if (color13Value != "")
+            {
+                form.PED_HTCD13_DESNIVEL_COLOR.BackColor = System.Drawing.Color.FromArgb(Convert.ToInt32(color13Value.Substring(0, 3)), Convert.ToInt32(color13Value.Substring(3, 3)), Convert.ToInt32(color13Value.Substring(6, 3)));
+            }
+            if (color14Value != "")
+            {
+                form.PED_HTCD14_DESNIVEL_COLOR.BackColor = System.Drawing.Color.FromArgb(Convert.ToInt32(color14Value.Substring(0, 3)), Convert.ToInt32(color14Value.Substring(3, 3)), Convert.ToInt32(color14Value.Substring(6, 3)));
+            }
+            if (color15Value != "")
+            {
+                form.PED_HTCD15_DESNIVEL_COLOR.BackColor = System.Drawing.Color.FromArgb(Convert.ToInt32(color15Value.Substring(0, 3)), Convert.ToInt32(color15Value.Substring(3, 3)), Convert.ToInt32(color15Value.Substring(6, 3)));
+            }
+            if (color16Value != "")
+            {
+                form.PED_HTCD16_DESNIVEL_COLOR.BackColor = System.Drawing.Color.FromArgb(Convert.ToInt32(color16Value.Substring(0, 3)), Convert.ToInt32(color16Value.Substring(3, 3)), Convert.ToInt32(color16Value.Substring(6, 3)));
+            }
+            if (color17Value != "")
+            {
+                form.PED_HTCD17_DESNIVEL_COLOR.BackColor = System.Drawing.Color.FromArgb(Convert.ToInt32(color17Value.Substring(0, 3)), Convert.ToInt32(color17Value.Substring(3, 3)), Convert.ToInt32(color17Value.Substring(6, 3)));
+            }
+            if (color18Value != "")
+            {
+                form.PED_HTCD18_DESNIVEL_COLOR.BackColor = System.Drawing.Color.FromArgb(Convert.ToInt32(color18Value.Substring(0, 3)), Convert.ToInt32(color18Value.Substring(3, 3)), Convert.ToInt32(color18Value.Substring(6, 3)));
+            }
+            if (color19Value != "")
+            {
+                form.PED_HTCD19_DESNIVEL_COLOR.BackColor = System.Drawing.Color.FromArgb(Convert.ToInt32(color19Value.Substring(0, 3)), Convert.ToInt32(color19Value.Substring(3, 3)), Convert.ToInt32(color19Value.Substring(6, 3)));
+            }
+            if (color20Value != "")
+            {
+                form.PED_HTCD20_DESNIVEL_COLOR.BackColor = System.Drawing.Color.FromArgb(Convert.ToInt32(color20Value.Substring(0, 3)), Convert.ToInt32(color20Value.Substring(3, 3)), Convert.ToInt32(color20Value.Substring(6, 3)));
+            }
+            #endregion
+
+            #region Eventos dos botões
             IExternalEventHandler handlerSalverDesniveisEvent = new SalvarDesniveis(form);
             ExternalEvent SalvarDesniveisEvent = ExternalEvent.Create(handlerSalverDesniveisEvent);
 
@@ -333,35 +635,35 @@ namespace TopazioRevitPluginShared
 
             form.aplicarEvent = SalvarDesniveisEvent;
             form.resetarEvent = ResetarDesniveisEvent;
-
+            #endregion
 
             Level level = doc.GetElement(levelID) as Level;
-            Entity entity = level.GetEntity(schema);
+            Entity Levelentity = level.GetEntity(schema);
 
 
-            if (entity.IsValid())
+            if (Levelentity.IsValid())
             {
                 //GET VALORES
-                var color1Value = entity.Get<string>(schema.GetField("PED_HTCD1_DESNIVEL_COLOR"));
-                var color2Value = entity.Get<string>(schema.GetField("PED_HTCD2_DESNIVEL_COLOR"));
-                var color3Value = entity.Get<string>(schema.GetField("PED_HTCD3_DESNIVEL_COLOR"));
-                var color4Value = entity.Get<string>(schema.GetField("PED_HTCD4_DESNIVEL_COLOR"));
-                var color5Value = entity.Get<string>(schema.GetField("PED_HTCD5_DESNIVEL_COLOR"));
-                var color6Value = entity.Get<string>(schema.GetField("PED_HTCD6_DESNIVEL_COLOR"));
-                var color7Value = entity.Get<string>(schema.GetField("PED_HTCD7_DESNIVEL_COLOR"));
-                var color8Value = entity.Get<string>(schema.GetField("PED_HTCD8_DESNIVEL_COLOR"));
-                var color9Value = entity.Get<string>(schema.GetField("PED_HTCD9_DESNIVEL_COLOR"));
-                var color10Value = entity.Get<string>(schema.GetField("PED_HTCD10_DESNIVEL_COLOR"));
-                var color11Value = entity.Get<string>(schema.GetField("PED_HTCD11_DESNIVEL_COLOR"));
-                var color12Value = entity.Get<string>(schema.GetField("PED_HTCD12_DESNIVEL_COLOR"));
-                var color13Value = entity.Get<string>(schema.GetField("PED_HTCD13_DESNIVEL_COLOR"));
-                var color14Value = entity.Get<string>(schema.GetField("PED_HTCD14_DESNIVEL_COLOR"));
-                var color15Value = entity.Get<string>(schema.GetField("PED_HTCD15_DESNIVEL_COLOR"));
-                var color16Value = entity.Get<string>(schema.GetField("PED_HTCD16_DESNIVEL_COLOR"));
-                var color17Value = entity.Get<string>(schema.GetField("PED_HTCD17_DESNIVEL_COLOR"));
-                var color18Value = entity.Get<string>(schema.GetField("PED_HTCD18_DESNIVEL_COLOR"));
-                var color19Value = entity.Get<string>(schema.GetField("PED_HTCD19_DESNIVEL_COLOR"));
-                var color20Value = entity.Get<string>(schema.GetField("PED_HTCD20_DESNIVEL_COLOR"));
+                color1Value = Levelentity.Get<string>(schema.GetField("PED_HTCD1_DESNIVEL_COLOR"));
+                color2Value = Levelentity.Get<string>(schema.GetField("PED_HTCD2_DESNIVEL_COLOR"));
+                color3Value = Levelentity.Get<string>(schema.GetField("PED_HTCD3_DESNIVEL_COLOR"));
+                color4Value = Levelentity.Get<string>(schema.GetField("PED_HTCD4_DESNIVEL_COLOR"));
+                color5Value = Levelentity.Get<string>(schema.GetField("PED_HTCD5_DESNIVEL_COLOR"));
+                color6Value = Levelentity.Get<string>(schema.GetField("PED_HTCD6_DESNIVEL_COLOR"));
+                color7Value = Levelentity.Get<string>(schema.GetField("PED_HTCD7_DESNIVEL_COLOR"));
+                color8Value = Levelentity.Get<string>(schema.GetField("PED_HTCD8_DESNIVEL_COLOR"));
+                color9Value = Levelentity.Get<string>(schema.GetField("PED_HTCD9_DESNIVEL_COLOR"));
+                color10Value = Levelentity.Get<string>(schema.GetField("PED_HTCD10_DESNIVEL_COLOR"));
+                color11Value = Levelentity.Get<string>(schema.GetField("PED_HTCD11_DESNIVEL_COLOR"));
+                color12Value = Levelentity.Get<string>(schema.GetField("PED_HTCD12_DESNIVEL_COLOR"));
+                color13Value = Levelentity.Get<string>(schema.GetField("PED_HTCD13_DESNIVEL_COLOR"));
+                color14Value = Levelentity.Get<string>(schema.GetField("PED_HTCD14_DESNIVEL_COLOR"));
+                color15Value = Levelentity.Get<string>(schema.GetField("PED_HTCD15_DESNIVEL_COLOR"));
+                color16Value = Levelentity.Get<string>(schema.GetField("PED_HTCD16_DESNIVEL_COLOR"));
+                color17Value = Levelentity.Get<string>(schema.GetField("PED_HTCD17_DESNIVEL_COLOR"));
+                color18Value = Levelentity.Get<string>(schema.GetField("PED_HTCD18_DESNIVEL_COLOR"));
+                color19Value = Levelentity.Get<string>(schema.GetField("PED_HTCD19_DESNIVEL_COLOR"));
+                color20Value = Levelentity.Get<string>(schema.GetField("PED_HTCD20_DESNIVEL_COLOR"));
 
 
                 form.textBox1.Text = color1Value;
@@ -393,7 +695,7 @@ namespace TopazioRevitPluginShared
         }
     }
 
-
+    #region Função do botão salvar do forms
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     class SalvarDesniveis : IExternalEventHandler
@@ -410,7 +712,6 @@ namespace TopazioRevitPluginShared
             Document doc = app.ActiveUIDocument.Document;
             using (Transaction t = new Transaction(doc, "CameraTransaction"))
             {
-                TaskDialog.Show("Debug", "Salvando");
                 Guid schemaGUID = new Guid("58ffa6af-2458-4da8-8a7c-7d8beb619a29");
                 Schema schema = Schema.Lookup(schemaGUID);
 
@@ -420,9 +721,7 @@ namespace TopazioRevitPluginShared
                 Entity entity = levelElem.GetEntity(schema);
                 if (!entity.IsValid())
                 {
-                    TaskDialog.Show("DEBUG", "Entrei");
                     entity  = new Entity(schema);
-                    TaskDialog.Show("DEBUG", "Criei");
                 }
 
                 var desniveislist = form.textBoxList;
@@ -446,7 +745,9 @@ namespace TopazioRevitPluginShared
             return "AplicarCoresForm";
         }
     }
+    #endregion
 
+    #region Função do botão reset do forms
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     class ResetarDesniveis : IExternalEventHandler
@@ -475,8 +776,7 @@ namespace TopazioRevitPluginShared
                     {
                         ElementId elementlevel = piso.LookupParameter("Nível").AsElementId();
                         var desnivel = Math.Round(Utils.ConvertFromInternalUnits(doc, piso.LookupParameter("Altura do deslocamento do nível").AsDouble()),2);
-
-                        if (elementlevel == levelId)
+                        if (elementlevel == levelId && desnivel != 0)
                         {
                             if (!desniveisList.Contains(desnivel))
                             {
@@ -488,7 +788,7 @@ namespace TopazioRevitPluginShared
                         {
                             var elementlevelElem = doc.GetElement(elementlevel);
                             var desnivelTotal = Math.Round(Utils.ConvertFromInternalUnits(doc, elementlevelElem.LookupParameter("Elevação").AsDouble() - levelElem.LookupParameter("Elevação").AsDouble()), 2) + desnivel;
-                            if (!desniveisList.Contains(desnivelTotal))
+                            if (!desniveisList.Contains(desnivelTotal) && desnivelTotal != 0)
                             {
                                 desniveisList.Add(desnivelTotal);
                             }
@@ -506,6 +806,7 @@ namespace TopazioRevitPluginShared
                         {
                             continue;
                         }
+                        
 
                         
 
@@ -517,7 +818,7 @@ namespace TopazioRevitPluginShared
                         }
                         
                         ElementId elementlevel = viga.LookupParameter("Nível de referência").AsElementId();
-                        if (elementlevel == levelId)
+                        if (elementlevel == levelId && desnivelInicial != 0)
                         {
                             if (!desniveisList.Contains(desnivelInicial))
                             {
@@ -529,7 +830,7 @@ namespace TopazioRevitPluginShared
                         {
                             var elementlevelElem = doc.GetElement(elementlevel);
                             var desnivelTotal = Math.Round(Utils.ConvertFromInternalUnits(doc, elementlevelElem.LookupParameter("Elevação").AsDouble() - levelElem.LookupParameter("Elevação").AsDouble()), 2) + desnivelInicial;
-                            if (!desniveisList.Contains(desnivelTotal))
+                            if (!desniveisList.Contains(desnivelTotal) && desnivelTotal != 0)
                             {
                                 desniveisList.Add(desnivelTotal);
                             }
@@ -546,8 +847,12 @@ namespace TopazioRevitPluginShared
                     desniveisList.Sort();
                     desniveisList.Reverse();
                     t.Start();
+                    foreach( var item in form.textBoxList)
+                    {
+                        item.Text = "";
+                    }
                     int index = 0;
-                    foreach( var item in desniveisList)
+                    foreach ( var item in desniveisList)
                     {
                         form.textBoxList[index].Text = item.ToString();
                         index++;
@@ -566,5 +871,7 @@ namespace TopazioRevitPluginShared
         }
     }
 
+    #endregion
+    #endregion
 
 }

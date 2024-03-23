@@ -185,5 +185,10 @@ namespace TopazioRevitPluginShared
             var unit = doc.GetUnits().GetFormatOptions(SpecTypeId.Length).GetUnitTypeId();
             return UnitUtils.ConvertFromInternalUnits(internalValue, unit);
         }
+
+        public static Color ColorFrom9String(string colorstring)
+        {
+            return new Color(Convert.ToByte(colorstring.Substring(0, 3)), Convert.ToByte(colorstring.Substring(3, 3)), Convert.ToByte(colorstring.Substring(6, 3)));
+        }
     }
 }
