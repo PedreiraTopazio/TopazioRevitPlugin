@@ -2,7 +2,7 @@
 <RevitAddIns>
   <AddIn Type="Application">
     <Name> Topazio Plugin </Name>
-    <Assembly>C:\Program Files (x86)\Topazio\RevitPlugin\2022\TopazioRevitPlugin2022.dll</Assembly>
+    <Assembly>C:\Program Files (x86)\Topazio\RevitPlugin\2022\TopazioRevitPlugin.dll</Assembly>
     <AddInId>EC33FE13-862B-44C7-AC68-03753E1FE902</AddInId>
     <FullClassName>TopazioRevitPluginShared.TopazioPanel</FullClassName>
     <VendorId>TopazioBIM</VendorId>

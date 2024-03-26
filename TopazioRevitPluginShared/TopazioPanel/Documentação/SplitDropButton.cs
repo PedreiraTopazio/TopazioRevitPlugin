@@ -84,8 +84,15 @@ namespace TopazioRevitPluginShared
                     {
                         var desnivel = Math.Round(Convert.ToDouble(Levelentity.Get<string>(schema.GetField("PED_HTCD" + index.ToString() + "_DESNIVEL_COLOR"))), 2);
                         var color = Utils.ColorFrom9String(entity.Get<string>(schema.GetField("PED_HTCD" + index.ToString() + "_DESNIVEL_COLOR")));
-
-                        DictDesniveisColor.Add(desnivel, color);
+                        try
+                        {
+                            DictDesniveisColor.Add(desnivel, color);
+                        }
+                        catch
+                        {
+                            TaskDialog.Show("Error", "Mais de uma de cor atribuida ao mesmo desnivel");
+                        }
+                        
                     }
                     
                     index++;
@@ -761,8 +768,9 @@ namespace TopazioRevitPluginShared
 
         public void Execute(UIApplication app)
         {
+            TaskDialog.Show("Debug", "Resetar");
             Document doc = app.ActiveUIDocument.Document;
-            using (Transaction t = new Transaction(doc, "CameraTransaction"))
+            using (Transaction t = new Transaction(doc, "Resetar Formulario"))
             {
                 var vigas  = new FilteredElementCollector(doc, doc.ActiveView.Id).WherePasses(new ElementCategoryFilter(BuiltInCategory.OST_StructuralFraming)).ToElements();
                 var pisos  = new FilteredElementCollector(doc, doc.ActiveView.Id).WherePasses(new ElementCategoryFilter(BuiltInCategory.OST_Floors)).ToElements();
@@ -770,6 +778,9 @@ namespace TopazioRevitPluginShared
 
                 ElementId levelId = Utils.GetLevelOfView(doc, doc.ActiveView);
                 Element levelElem = doc.GetElement(levelId);
+
+                TaskDialog.Show("Debug", vigas.Count.ToString());
+                TaskDialog.Show("Debug", pisos.Count.ToString());
                 foreach (var piso in pisos)
                 {
                     if (piso.LookupParameter("Titulo").AsString() != "")
@@ -797,7 +808,6 @@ namespace TopazioRevitPluginShared
                 }
                 foreach (var viga in vigas)
                 {
-
                     if (viga.LookupParameter("Titulo").AsString() != "")
                     {
                         //COLOCAR O MÉTODO PARA DESBLOQUEAR O NIVEL

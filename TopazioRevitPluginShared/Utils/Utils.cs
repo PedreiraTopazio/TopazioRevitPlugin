@@ -28,11 +28,10 @@ namespace TopazioRevitPluginShared
 
         public static ElementId GetLevelOfView(Document doc, View view)
         {
-            var level = view.get_Parameter(BuiltInParameter.PLAN_VIEW_LEVEL).AsValueString();
+            var level = view.get_Parameter(BuiltInParameter.PLAN_VIEW_LEVEL).AsString();
             var allLevels = new FilteredElementCollector(doc).OfClass(typeof(Level)).ToElements();
             foreach (Level docLevel in allLevels)
             {
-
                 if (docLevel.Name == level)
                 {
                     return docLevel.Id;
@@ -182,8 +181,13 @@ namespace TopazioRevitPluginShared
 
         public static double ConvertFromInternalUnits(Document doc, double internalValue)
         {
+#if REVIT2020
+            var unit = DisplayUnitType.DUT_CENTIMETERS;
+            return UnitUtils.ConvertFromInternalUnits(internalValue, unit);
+#else
             var unit = doc.GetUnits().GetFormatOptions(SpecTypeId.Length).GetUnitTypeId();
             return UnitUtils.ConvertFromInternalUnits(internalValue, unit);
+#endif
         }
 
         public static Color ColorFrom9String(string colorstring)
